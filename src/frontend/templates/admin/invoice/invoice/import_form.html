@@ -1,0 +1,9 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<form method="post" novalidate>
+  {% csrf_token %}
+  <table>{{ form.as_table }}</table>
+  <input type="submit" value="Import" class="default">
+  <a href="{% url 'admin:invoice_invoice_changelist' %}">Cancel</a>
+</form>
+{% endblock %}
