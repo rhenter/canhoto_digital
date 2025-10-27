@@ -1,188 +1,191 @@
 # Canhoto Digital API
 
-## Requirements
+Sistema de Canhoto Digital (NF-e)
 
-This project requires:
+Este README está disponível em: Português (BR) | [English](README.en.md)
 
-* Python 3.12
-* PostgreSQL 9.3+
-* Redis (for Celery broker running locally)
-* Git
-* virtualenvwrapper, pyenv virtualenv or virtualenv for local development
+## Requisitos
 
-## Installation
+Este projeto requer:
 
-### 1. Clone the repository
+- Python 3.12
+- PostgreSQL 9.3+
+- Redis (para broker do Celery em ambiente local)
+- Git
+- virtualenvwrapper, pyenv virtualenv ou virtualenv para desenvolvimento local
+
+## Instalação
+
+### 1. Clonar o repositório
 
 ```shell
 $ git clone <repository-url>
 $ cd canhoto_digital
 ```
 
-### 2. Set up Python environment
+### 2. Preparar o ambiente Python
 
-Using pyenv (recommended):
+Usando pyenv (recomendado):
 
 ```shell
-# Install pyenv if not already installed
+# Instale o pyenv se ainda não tiver
 $ curl https://pyenv.run | bash
 $ export PATH="$HOME/.pyenv/bin:$PATH"
 $ eval "$(pyenv init -)"
 $ eval "$(pyenv virtualenv-init -)"
 
-# Restart terminal or exec
+# Reinicie o terminal ou rode
 $ exec "$SHELL"
 
-# Install Python 3.12 and create virtual environment
+# Instale o Python 3.12 e crie o ambiente virtual
 $ pyenv install 3.12.0
 $ pyenv virtualenv 3.12.0 canhoto_digital
 $ pyenv activate canhoto_digital
 ```
 
-### 3. Install dependencies
+### 3. Instalar dependências
 
 ```shell
 $ pip install -r requirements/local.txt
 ```
 
-Or using make:
+Ou usando make:
 
 ```shell
 $ make deps
 ```
 
-### 4. Configure environment
+### 4. Configurar variáveis de ambiente
 
 ```shell
 $ cp local.env .env
-# Edit .env file with your local settings
+# Edite o arquivo .env com suas configurações locais
 ```
 
-### 5. Set up database
+### 5. Preparar o banco de dados
 
 ```shell
 $ python src/manage.py migrate
 ```
 
-Or using make:
+Ou usando make:
 
 ```shell
 $ make migrate
 ```
 
-### 6. Create superuser (optional)
+### 6. Criar superusuário (opcional)
 
 ```shell
 $ python src/manage.py createsuperuser
 ```
 
-## Development
+## Desenvolvimento
 
-### Running the Development Server Locally
+### Executar o servidor de desenvolvimento localmente
 
 ```shell
 $ python src/manage.py runserver
 ```
 
-Or using make:
+Ou usando make:
 
 ```shell
 $ make run
 ```
 
-The API will be available at `http://localhost:8000/`
+A API ficará disponível em `http://localhost:8000/`
 
-### Running the Development Server using Docker
+### Executar com Docker
 
 ```shell
 $ docker compose up --build
 # admin: http://localhost:8000/admin
 ```
 
-### Running Celery Worker
+### Executar o worker do Celery
 
-For background task processing:
+Para processamento assíncrono de tarefas:
 
 ```shell
 $ make celery
 ```
 
-Or manually:
+Ou manualmente:
 
 ```shell
 $ cd src
 $ celery -A proj_settings worker --loglevel=info
 ```
 
-### Available Make Commands
+### Comandos Make disponíveis
 
-* `make deps` - Install dependencies
-* `make run` - Run development server
-* `make migrate` - Apply database migrations
-* `make migrations` - Create new migrations
-* `make test` - Run tests
-* `make celery` - Start Celery worker
-* `make clean` - Clean temporary files
+- `make deps` - Instalar dependências
+- `make run` - Executar o servidor de desenvolvimento
+- `make migrate` - Aplicar migrações do banco
+- `make migrations` - Criar novas migrações
+- `make test` - Executar testes
+- `make celery` - Iniciar o worker do Celery
+- `make clean` - Limpar arquivos temporários
 
-## Testing
+## Testes
 
-We use `pytest` with additional plugins for comprehensive testing.
+Utilizamos `pytest` com plugins adicionais para uma cobertura abrangente.
 
-Run all tests:
+Executar todos os testes:
 
 ```shell
 $ cd src
 $ pytest -vv -s
 ```
 
-Run tests with coverage:
+Executar testes com cobertura:
 
 ```shell
 $ cd src
 $ pytest --cov=apps --cov-report=html
 ```
 
+## Integração com SEFAZ — Como usar
 
-## SEFAZ Integration — How to use
+O projeto inclui uma integração real com a distribuição DF-e da SEFAZ para buscar as últimas notas da sua empresa. O cliente está em `src/apps/invoice/sefaz/` e é utilizado por uma ação do Admin e por uma tarefa Celery.
 
-The project includes a real integration with SEFAZ DF-e distribution to fetch your company's latest invoices. The client lives at `src/apps/invoice/sefaz/` and is used by an Admin action and a Celery task.
-
-### Prerequisites
-- A Company record with the following fields filled:
-  - `cnpj` (numbers only)
-  - `uf` (state)
-  - `sefaz_environment` ("production" or "homologation")
-  - `certificate` (A1 e-CNPJ file: .pfx or .p12)
+### Pré-requisitos
+- Um registro de Empresa (Company) com os campos abaixo preenchidos:
+  - `cnpj` (somente números)
+  - `uf` (estado)
+  - `sefaz_environment` ("production" ou "homologation")
+  - `certificate` (arquivo A1 e-CNPJ: .pfx ou .p12)
   - `certificate_password`
-- Celery worker running.
-- Optional setting (already defaulted): `SEFAZ_HTTP_TIMEOUT_SECONDS` in `proj_settings.settings` to tune HTTP timeout (default: 60 seconds).
+- Worker do Celery em execução.
+- Configuração opcional (já padronizada): `SEFAZ_HTTP_TIMEOUT_SECONDS` em `proj_settings.settings` para ajustar o timeout HTTP (padrão: 60 segundos).
 
-### Option 1 — Import via Django Admin
-1) Go to Admin → Invoices.
-2) Click "Import from SEFAZ" in the top-right actions.
-3) Fill the form: Company and date range.
-4) Submit. A Celery task will be enqueued and progress will appear in Celery logs.
+### Opção 1 — Importar via Django Admin
+1) Vá ao Admin → Invoices.
+2) Clique em "Import from SEFAZ" nas ações do canto superior direito.
+3) Preencha o formulário: Empresa e intervalo de datas.
+4) Envie. Uma tarefa Celery será enfileirada e o progresso aparecerá nos logs do Celery.
 
-Invoices that match the selected date range will be created/updated in the `Invoice` model. The company's `last_nsu` is updated as batches are processed.
+As notas que coincidirem com o período selecionado serão criadas/atualizadas no modelo `Invoice`. O campo `last_nsu` da empresa é atualizado conforme os lotes são processados.
 
-### Option 2 — Programmatic import (Celery task)
-You can trigger the same import task programmatically, for example, from the Django shell:
+### Opção 2 — Importar programaticamente (tarefa Celery)
+Você pode disparar a mesma tarefa programaticamente, por exemplo, pelo shell do Django:
 
 ```python
 from datetime import date
 from apps.company.models import Company
 from apps.invoice.tasks import import_from_sefaz
 
-company = Company.objects.get(cnpj="00000000000000")  # replace with your CNPJ
+company = Company.objects.get(cnpj="00000000000000")  # substitua pelo seu CNPJ
 res = import_from_sefaz.delay(company.id, date(2025, 1, 1).isoformat(), date(2025, 1, 31).isoformat())
-print(res.id)  # Celery task id
+print(res.id)  # id da tarefa Celery
 ```
 
-When the task finishes, it returns a payload like `{ "created": X, "updated": Y }`.
+Quando a tarefa termina, ela retorna um payload como `{ "created": X, "updated": Y }`.
 
-### Notes
-- The integration uses the official national DF-e SOAP endpoint with mutual TLS (client certificate). No paid providers are required.
-- SEFAZ may return summary documents (`resNFe`) or full NF-e (`procNFe`). The importer maps available data into `Invoice` fields; XML/PDF files are not persisted by default.
-- The NSU cursor (`company.last_nsu`) advances even if no invoices fall within the chosen date filter, which avoids re-reading old batches.
-- If you switch environments (homologation/production) or certificates, you may want to reset `last_nsu` to `0`.
-- Errors will surface in Admin messages or Celery logs. Check certificate validity and password if TLS errors occur.
+### Notas
+- A integração usa o endpoint nacional oficial de DF-e via SOAP com mTLS (certificado de cliente). Não são necessários provedores pagos.
+- A SEFAZ pode retornar documentos de resumo (`resNFe`) ou NF-e completa (`procNFe`). O importador mapeia os dados disponíveis para os campos de `Invoice`; arquivos XML/PDF não são persistidos por padrão.
+- O cursor de NSU (`company.last_nsu`) avança mesmo que nenhuma nota caia dentro do filtro de datas escolhido, evitando reprocessar lotes antigos.
+- Se você trocar o ambiente (homologação/produção) ou o certificado, pode ser necessário resetar o `last_nsu` para `0`.
+- Erros aparecerão nas mensagens do Admin ou nos logs do Celery. Verifique a validade do certificado e a senha em caso de erros de TLS.
