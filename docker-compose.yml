@@ -1,0 +1,56 @@
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: canhoto
+      POSTGRES_USER: canhoto
+      POSTGRES_PASSWORD: canhoto
+    ports: ["5432:5432"]
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7
+    ports: ["6379:6379"]
+
+  web:
+    build: .
+    environment:
+      DJANGO_SECRET_KEY: change-me
+      DJANGO_DEBUG: "true"
+      DJANGO_ALLOWED_HOSTS: localhost,127.0.0.1
+      TZ: America/Sao_Paulo
+      POSTGRES_NAME: canhoto
+      POSTGRES_USER: canhoto
+      POSTGRES_PASSWORD: canhoto
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      REDIS_URL: redis://redis:6379/0
+    volumes:
+      - ./src:/app/src
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+      - redis
+
+  celery:
+    build: .
+    command: celery -A proj_settings.celery_app worker -l info
+    environment:
+      DJANGO_SETTINGS_MODULE: proj_settings.settings
+      POSTGRES_NAME: canhoto
+      POSTGRES_USER: canhoto
+      POSTGRES_PASSWORD: canhoto
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      REDIS_URL: redis://redis:6379/0
+    volumes:
+      - ./src:/app/src
+    depends_on:
+      - redis
+      - postgres
+      - web
+
+volumes:
+  pgdata:
