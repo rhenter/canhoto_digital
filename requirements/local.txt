@@ -1,0 +1,8 @@
+-r test.txt
+black
+ipdb
+ipywidgets
+nbformat
+opcua
+cryptography
+crypto
