@@ -1,7 +1,5 @@
 # Canhoto Digital API
 
-Stack: Django 5 + DRF + SimpleJWT + Celery + Redis + Postgres + boto3 (presign S3) + django-filter + Admin SEFAZ Import.
-
 ## Requirements
 
 This project requires:
