@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
-from django.contrib import admin
+from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from drf_yasg import openapi
@@ -9,6 +9,10 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from apps.core.views import CustomLoginView, HealthCheckView
 from proj_settings.schema import get_schema_view, CustomOpenAPISchemaGenerator
+from .admin_custom import admin_site, autodiscover_and_register
+
+# Ensure all admin modules are discovered and registered
+autodiscover_and_register()
 
 extras = {
     "x-logo": {
@@ -46,7 +50,7 @@ urlpatterns = [
 admin_patterns = i18n_patterns(
     path('doc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('admin/clearcache/', include('clearcache.urls')),
-    path('admin/', admin.site.urls),
+    path('admin/', admin_site.urls),
 )
 
 api_urlpatterns = [
@@ -61,3 +65,6 @@ api_urlpatterns = [
 
 urlpatterns.extend(admin_patterns)
 urlpatterns.extend(api_urlpatterns)
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

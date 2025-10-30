@@ -1,0 +1,66 @@
+{% extends "admin/base_site.html" %}
+
+{% load static %}
+{% load i18n %}
+{% load admin_urls %}
+
+<!-- custom filter module -->
+{% load i18n_switcher %}
+
+{% block extrastyle %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/flags.css' %}"/>
+    <link rel="icon" href="{% static 'img/favicon.png' %}">
+    {{ block.super }}
+{% endblock %}
+{% block branding %}
+    <h1 id="site-name">
+        <a href="{% url 'admin:index' %}">
+            <span style="margin-left: 5px; font-weight: bold; font-size: 16px; color: white">{{ settings.APP_NAME }} </span>
+            <span style="margin-left: 5px; position: relative;  font-weight: bold; font-size: 20px">{% trans 'Environment' %}: {{ settings.ENVIRONMENT_NAME|title }}</span>
+        </a>
+    </h1>
+{% endblock %}
+
+
+{% block userlinks %}
+    <a href="{{ request|switch_i18n:'en' }}">
+        <span class="flag flag-us"></span>
+    </a> /
+    <a href="{{ request|switch_i18n:'pt-br' }}">
+        <span class="flag flag-br"></span>
+    </a> /
+    <a href="{{ request|switch_i18n:'es' }}">
+        <span class="flag flag-es"></span>
+    </a> /
+    {% if user.is_active and user.is_staff %}
+        {% url 'django-admindocs-docroot' as docsroot %}
+        {% if docsroot %}
+            <a href="{{ docsroot }}">{% trans 'Documentation' %}</a> /
+        {% endif %}
+    {% endif %}
+    {% if user.has_usable_password %}
+        <a href="{% url 'admin:password_change' %}">{% trans 'Change password' %}</a> /
+    {% endif %}
+    <a href="{% url 'admin:logout' %}">{% trans 'Log out' %}</a>
+{% endblock %}
+
+
+{% block footer %}
+    <script type="text/javascript">
+        var $ = django.jQuery;
+        $(document).ready(function () {
+            $('.tabular table th:contains({% trans "Delete?" %})').each(function (index) {
+                var text = $(this).text();
+                $(this).html('<input type="checkbox" class="selectall_checkbox"> ' + text);
+            });
+            $('.selectall_checkbox').click(function (e) {
+                $(e.target).closest('table').find(':checkbox').filter(function () {
+                    return /DELETE/.test(this.name);
+                }).each(function () {
+                    this.checked = e.target.checked;
+                });
+            });
+        });
+    </script>
+{% endblock footer %}

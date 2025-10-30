@@ -1,0 +1,23 @@
+{% extends "admin/change_form.html" %}
+{% load i18n admin_urls %}
+
+{#
+  Custom Invoice change form template to add a "Generate DANFE" button next to the History link
+  Styling follows Django admin object-tools (same area as History/View on site)
+#}
+
+{% block object-tools-items %}
+  {{ block.super }}
+  {% if change and original %}
+    <li>
+      <a href="{% url 'admin:invoice_invoice_download_xml' original.id %}" class="historylink">
+        {% trans "Download XML" %}
+      </a>
+    </li>
+    <li>
+      <a href="{% url 'admin:invoice_invoice_generate_danfe' original.id %}" class="historylink">
+        {% trans "Generate DANFE" %}
+      </a>
+    </li>
+  {% endif %}
+{% endblock %}

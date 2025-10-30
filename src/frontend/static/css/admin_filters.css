@@ -1,0 +1,7 @@
+#changelist-filter.hidden {
+    display: none !important;
+}
+
+.filtered.hidden-filters #changelist {
+    margin-right: 0 !important;
+}

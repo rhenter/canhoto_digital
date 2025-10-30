@@ -1,0 +1,21 @@
+{% extends "admin/change_form.html" %}
+{% load i18n admin_urls %}
+
+{#
+  Custom Company change form template to add an "Invoices" button next to the History link
+  Styling follows Django admin object-tools (same area as History/View on site)
+#}
+
+{% block object-tools-items %}
+  {{ block.super }}
+  {% if change and original %}
+    <li>
+      <a href="{% url 'admin:invoice_invoice_changelist' %}?company={{ original.id }}" class="historylink">
+        {% trans "Invoices" %}
+      </a>
+        <a href="{% url 'admin:delivery_delivery_changelist' %}?invoice__company={{ original.id }}" class="historylink">
+        {% trans "Deliveries" %}
+      </a>
+    </li>
+  {% endif %}
+{% endblock %}

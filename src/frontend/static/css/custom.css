@@ -1,0 +1,19 @@
+.i18n_flag img {
+    width: 16px;
+    vertical-align: text-top;
+}
+.no-upper h2 {
+  text-transform: unset;
+}
+
+.model-taskresult td.field-result {
+    white-space: normal !important;
+    max-width: 300px;
+    word-wrap: break-word;
+}
+
+.model-area td.field-allow_email_notifications .model-area td.field-is_datasource_only {
+    white-space: normal !important;
+    max-width: 50px;
+    word-wrap: break-word;
+}
