@@ -16,8 +16,13 @@ except Exception:  # pragma: no cover - informative fallback
 
 
 def get_endpoint() -> str:
-    """Return the national DF-e distribution endpoint (production and homologation use the same URL)."""
-    return "https://www.nfe.fazenda.gov.br/NFeDistribuicaoDFe/NFeDistribuicaoDFe.asmx"
+    """Return the national DF-e distribution endpoint (production and homologation use the same URL).
+
+    Notes:
+    - The correct host is `www1.nfe.fazenda.gov.br`. Using `www.` returns 404 for POSTs.
+    - Both production and homologation share this national endpoint; selection is done by `tpAmb`.
+    """
+    return "https://www1.nfe.fazenda.gov.br/NFeDistribuicaoDFe/NFeDistribuicaoDFe.asmx"
 
 
 def decompress_doczip_to_xml(doczip_b64: str) -> ET.Element:
@@ -75,5 +80,22 @@ def build_distdfeint_xml(tp_amb: int, cufa: int, cnpj: str, ult_nsu: str) -> str
         f"<cUFAutor>{cufa:02d}</cUFAutor>"
         f"<CNPJ>{cnpj}</CNPJ>"
         f"<distNSU><ultNSU>{ult_nsu}</ultNSU></distNSU>"
+        f"</distDFeInt>"
+    )
+
+
+def build_distdfeint_xml_by_key(tp_amb: int, cufa: int, cnpj: str, chave_nfe: str) -> str:
+    """Build `distDFeInt` XML for consult by chave (consChNFe).
+
+    According to DF-e distribution, you can request a specific NF-e by its access key
+    using `<consChNFe>` element.
+    """
+    chave = (chave_nfe or "").strip()
+    return (
+        f'<distDFeInt xmlns="http://www.portalfiscal.inf.br/nfe" versao="1.01">'
+        f"<tpAmb>{tp_amb}</tpAmb>"
+        f"<cUFAutor>{cufa:02d}</cUFAutor>"
+        f"<CNPJ>{cnpj}</CNPJ>"
+        f"<consChNFe><chNFe>{chave}</chNFe></consChNFe>"
         f"</distDFeInt>"
     )
