@@ -30,3 +30,7 @@ unipath
 # SEFAZ integration dependencies
 requests>=2.31
 cryptography>=42
+
+# DANFE generation
+brazilfiscalreport>=0.1.21
+reportlab>=4.2
