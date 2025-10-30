@@ -1,0 +1,642 @@
+# Spanish translations for project.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: canhoto_digital\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-10-29 20:42+0000\n"
+"PO-Revision-Date: 2025-10-29 00:00+0000\n"
+"Last-Translator: Auto-generated\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: src/apps/celery_log/admin.py:56
+msgid "Parameters"
+msgstr ""
+
+#: src/apps/celery_log/admin.py:63
+msgid "Result"
+msgstr ""
+
+#: src/apps/celery_log/admin.py:308
+msgid "Timestamp"
+msgstr ""
+
+#: src/apps/celery_log/apps.py:8
+msgid "Task Results"
+msgstr ""
+
+#: src/apps/celery_log/models.py:25
+msgid "Task Log"
+msgstr ""
+
+#: src/apps/celery_log/models.py:26
+msgid "Task Logs"
+msgstr ""
+
+#: src/apps/celery_log/models.py:38 src/apps/celery_log/models.py:39
+msgid "Task Log Statistics"
+msgstr ""
+
+#: src/apps/company/admin.py:19
+msgid "IDENTIFICATION"
+msgstr ""
+
+#: src/apps/company/admin.py:23
+msgid "TAX REGISTRATION"
+msgstr ""
+
+#: src/apps/company/admin.py:28 src/apps/invoice/admin.py:33
+msgid "ADDRESS"
+msgstr ""
+
+#: src/apps/company/admin.py:55 src/apps/core/models.py:55
+msgid "Created at"
+msgstr ""
+
+#: src/apps/company/admin.py:63 src/apps/company/admin.py:67
+#: src/apps/invoice/models.py:24
+msgid "Invoices"
+msgstr ""
+
+#: src/apps/company/apps.py:7 src/apps/company/models.py:103
+#: src/apps/invoice/models.py:11 src/proj_settings/admin_custom.py:18
+msgid "Company"
+msgstr ""
+
+#: src/apps/company/constants.py:4 src/proj_settings/settings.py:46
+msgid "Production"
+msgstr ""
+
+#: src/apps/company/constants.py:5
+msgid "Homologation"
+msgstr ""
+
+#: src/apps/company/models.py:12
+#, fuzzy
+#| msgid "Model name"
+msgid "Trade name"
+msgstr "Nombre del modelo"
+
+#: src/apps/company/models.py:13
+msgid "Public/commercial trade name"
+msgstr ""
+
+#: src/apps/company/models.py:17
+#, fuzzy
+#| msgid "Model name"
+msgid "Legal name"
+msgstr "Nombre del modelo"
+
+#: src/apps/company/models.py:18
+msgid "Registered legal name"
+msgstr ""
+
+#: src/apps/company/models.py:23
+msgid "CNPJ"
+msgstr ""
+
+#: src/apps/company/models.py:31
+msgid "State registration (IE)"
+msgstr ""
+
+#: src/apps/company/models.py:39
+#, fuzzy
+#| msgid "Environment"
+msgid "SEFAZ environment"
+msgstr "Entorno"
+
+#: src/apps/company/models.py:43
+msgid "Enable SEFAZ sync"
+msgstr ""
+
+#: src/apps/company/models.py:51
+msgid "Digital certificate (A1)"
+msgstr ""
+
+#: src/apps/company/models.py:52
+msgid "e-CNPJ (A1) certificate file (.pfx/.p12)"
+msgstr ""
+
+#: src/apps/company/models.py:58
+#, fuzzy
+#| msgid "Change password"
+msgid "Certificate password"
+msgstr "Cambiar la contraseña"
+
+#: src/apps/company/models.py:59
+msgid "Password for the digital certificate file"
+msgstr ""
+
+#: src/apps/company/models.py:65
+msgid "Certificate serial number"
+msgstr ""
+
+#: src/apps/company/models.py:70
+msgid "Certificate expiration"
+msgstr ""
+
+#: src/apps/company/models.py:76
+msgid "Last NSU"
+msgstr ""
+
+#: src/apps/company/models.py:77
+msgid "Last processed NSU for DF-e distribution"
+msgstr ""
+
+#: src/apps/company/models.py:82
+msgid "Last NSU updated at"
+msgstr ""
+
+#: src/apps/company/models.py:90
+msgid "CSC ID"
+msgstr ""
+
+#: src/apps/company/models.py:91
+msgid "NFC-e only (Taxpayer Security Code ID)"
+msgstr ""
+
+#: src/apps/company/models.py:97
+msgid "CSC token"
+msgstr ""
+
+#: src/apps/company/models.py:98
+msgid "NFC-e only (Taxpayer Security Code token)"
+msgstr ""
+
+#: src/apps/company/models.py:100
+msgid "Is Active"
+msgstr ""
+
+#: src/apps/company/models.py:104
+msgid "Companies"
+msgstr ""
+
+#: src/apps/core/admin_actions.py:10
+msgid "All items have been enabled."
+msgstr ""
+
+#: src/apps/core/admin_actions.py:18
+msgid "All items have been disabled."
+msgstr ""
+
+#: src/apps/core/admin_actions.py:29
+msgid "All notifications have been enabled."
+msgstr ""
+
+#: src/apps/core/admin_actions.py:40
+msgid "All notifications have been disabled."
+msgstr ""
+
+#: src/apps/core/admin_actions.py:44
+msgid "Activate"
+msgstr ""
+
+#: src/apps/core/admin_actions.py:47
+msgid "Deactivate"
+msgstr ""
+
+#: src/apps/core/admin_actions.py:50
+msgid "Deactivate Notifications"
+msgstr ""
+
+#: src/apps/core/admin_actions.py:53
+msgid "Re-enable Email Notifications"
+msgstr ""
+
+#: src/apps/core/admin_filters.py:24
+msgid "Area"
+msgstr ""
+
+#: src/apps/core/admin_filters.py:49
+msgid "Section"
+msgstr ""
+
+#: src/apps/core/apps.py:7
+msgid "Core"
+msgstr ""
+
+#: src/apps/core/forms.py:8
+#, fuzzy
+#| msgid "Change password"
+msgid "New password"
+msgstr "Cambiar la contraseña"
+
+#: src/apps/core/forms.py:11
+msgid "New password (verify)"
+msgstr ""
+
+#: src/apps/core/forms.py:30
+msgid "The two password fields didn't match."
+msgstr ""
+
+#: src/apps/core/models.py:14 src/apps/core/models.py:113
+#: src/apps/user/models.py:33
+msgid "User"
+msgstr ""
+
+#: src/apps/core/models.py:15
+msgid "Store"
+msgstr ""
+
+#: src/apps/core/models.py:28
+msgid "Sort"
+msgstr ""
+
+#: src/apps/core/models.py:58
+msgid "Updated at"
+msgstr ""
+
+#: src/apps/core/models.py:89
+msgid "Profile Type"
+msgstr ""
+
+#: src/apps/core/models.py:90
+msgid "Type of profile this terms of service applies to"
+msgstr ""
+
+#: src/apps/core/models.py:92
+msgid "Terms of Service text"
+msgstr ""
+
+#: src/apps/core/models.py:93
+msgid "The actual terms of service content"
+msgstr ""
+
+#: src/apps/core/models.py:97
+msgid "Terms of Service"
+msgstr ""
+
+#: src/apps/core/models.py:98
+msgid "Terms of service"
+msgstr ""
+
+#: src/apps/core/models.py:109
+msgid "Host"
+msgstr ""
+
+#: src/apps/core/models.py:110
+msgid "SMTP server hostname or IP address"
+msgstr ""
+
+#: src/apps/core/models.py:111
+msgid "Port"
+msgstr ""
+
+#: src/apps/core/models.py:112
+msgid "SMTP server port (usually 587 for TLS or 465 for SSL)"
+msgstr ""
+
+#: src/apps/core/models.py:114
+msgid "Username for SMTP authentication"
+msgstr ""
+
+#: src/apps/core/models.py:115
+#, fuzzy
+#| msgid "Change password"
+msgid "Password"
+msgstr "Cambiar la contraseña"
+
+#: src/apps/core/models.py:116
+msgid "Password for SMTP authentication"
+msgstr ""
+
+#: src/apps/core/models.py:117
+msgid "Use TLS"
+msgstr ""
+
+#: src/apps/core/models.py:118
+msgid "Enable TLS encryption for secure connection"
+msgstr ""
+
+#: src/apps/core/models.py:119
+msgid "Use SSL"
+msgstr ""
+
+#: src/apps/core/models.py:120
+msgid "Enable SSL encryption for secure connection"
+msgstr ""
+
+#: src/apps/core/models.py:121
+msgid "Timeout"
+msgstr ""
+
+#: src/apps/core/models.py:122
+msgid "Connection timeout in seconds"
+msgstr ""
+
+#: src/apps/core/models.py:123
+msgid "SSL Keyfile"
+msgstr ""
+
+#: src/apps/core/models.py:124
+msgid "SSL private key file for client certificate authentication"
+msgstr ""
+
+#: src/apps/core/models.py:125
+msgid "SSL Certfile"
+msgstr ""
+
+#: src/apps/core/models.py:126
+msgid "SSL certificate file for client certificate authentication"
+msgstr ""
+
+#: src/apps/core/models.py:127
+msgid "Active"
+msgstr ""
+
+#: src/apps/core/models.py:128
+msgid "Whether this SMTP configuration is currently active"
+msgstr ""
+
+#: src/apps/core/models.py:131 src/apps/core/models.py:132
+msgid "Email Settings"
+msgstr ""
+
+#: src/apps/core/models.py:152
+msgid "Audit Log"
+msgstr ""
+
+#: src/apps/core/models.py:153
+msgid "Audit Logs"
+msgstr ""
+
+#: src/apps/core/models.py:218
+msgid "Street"
+msgstr ""
+
+#: src/apps/core/models.py:219
+msgid "Neighborhood"
+msgstr ""
+
+#: src/apps/core/models.py:220
+msgid "City"
+msgstr ""
+
+#: src/apps/core/models.py:226
+msgid "State (UF)"
+msgstr ""
+
+#: src/apps/core/views/http_status.py:8
+msgid "Access Denied"
+msgstr ""
+
+#: src/apps/core/views/http_status.py:16
+msgid "Page Not Found"
+msgstr ""
+
+#: src/apps/delivery/admin.py:18
+msgid "DELIVERY DATA"
+msgstr ""
+
+#: src/apps/delivery/apps.py:7 src/apps/delivery/models.py:28
+#: src/apps/delivery/models.py:41 src/proj_settings/admin_custom.py:22
+msgid "Delivery"
+msgstr ""
+
+#: src/apps/delivery/constants.py:4
+msgid "Pending"
+msgstr ""
+
+#: src/apps/delivery/constants.py:5
+msgid "Delivered"
+msgstr ""
+
+#: src/apps/delivery/constants.py:6
+msgid "Failed"
+msgstr ""
+
+#: src/apps/delivery/constants.py:7
+msgid "Partial"
+msgstr ""
+
+#: src/apps/delivery/models.py:15 src/apps/invoice/apps.py:7
+#: src/apps/invoice/models.py:23
+msgid "Invoice"
+msgstr ""
+
+#: src/apps/delivery/models.py:22
+msgid "Assigned to"
+msgstr ""
+
+#: src/apps/delivery/models.py:24
+msgid "Recipient Expected"
+msgstr ""
+
+#: src/apps/delivery/models.py:25 src/apps/invoice/models.py:20
+msgid "Status"
+msgstr ""
+
+#: src/apps/delivery/models.py:29
+msgid "Deliveries"
+msgstr ""
+
+#: src/apps/delivery/models.py:43
+msgid "Received by"
+msgstr ""
+
+#: src/apps/delivery/models.py:44
+msgid "Received by Document"
+msgstr ""
+
+#: src/apps/delivery/models.py:45
+msgid "Signed at"
+msgstr ""
+
+#: src/apps/delivery/models.py:47
+msgid "Signed at Server"
+msgstr ""
+
+#: src/apps/delivery/models.py:48
+msgid "Geo Lat"
+msgstr ""
+
+#: src/apps/delivery/models.py:49
+msgid "Geo Lng"
+msgstr ""
+
+#: src/apps/delivery/models.py:51
+msgid "Signature Image"
+msgstr ""
+
+#: src/apps/delivery/models.py:53
+msgid "Photos"
+msgstr ""
+
+#: src/apps/delivery/models.py:54
+msgid "Meta"
+msgstr ""
+
+#: src/apps/delivery/models.py:57
+msgid "Proof of Delivery"
+msgstr ""
+
+#: src/apps/delivery/models.py:58
+msgid "Proof of Deliveries"
+msgstr ""
+
+#: src/apps/invoice/admin.py:28
+msgid "NF-e DATA"
+msgstr ""
+
+#: src/apps/invoice/models.py:14
+msgid "Number"
+msgstr ""
+
+#: src/apps/invoice/models.py:15
+msgid "Series"
+msgstr ""
+
+#: src/apps/invoice/models.py:16
+msgid "Issue date"
+msgstr ""
+
+#: src/apps/invoice/models.py:17
+msgid "Total value"
+msgstr ""
+
+#: src/apps/invoice/models.py:18
+msgid "XML file"
+msgstr ""
+
+#: src/apps/invoice/models.py:19
+msgid "PDF file"
+msgstr ""
+
+#: src/apps/user/admin.py:17
+msgid "Personal info"
+msgstr ""
+
+#: src/apps/user/admin.py:25
+msgid "Notifications"
+msgstr ""
+
+#: src/apps/user/admin.py:31
+msgid "Admin Permissions"
+msgstr ""
+
+#: src/apps/user/admin.py:34
+msgid "Important dates"
+msgstr ""
+
+#: src/apps/user/admin.py:56
+msgid "Group"
+msgstr ""
+
+#: src/apps/user/admin.py:57
+msgid "Groups"
+msgstr ""
+
+#: src/apps/user/apps.py:7
+msgid "Authentication and Authorization"
+msgstr ""
+
+#: src/apps/user/models.py:16
+msgid "Allow Email Notifications"
+msgstr ""
+
+#: src/apps/user/models.py:17
+msgid "Allow Push Notifications"
+msgstr ""
+
+#: src/apps/user/models.py:18
+msgid "Allow SMS Notifications"
+msgstr ""
+
+#: src/apps/user/models.py:19
+msgid "Allow WhatsApp Notifications"
+msgstr ""
+
+#: src/apps/user/models.py:26
+msgid "Preferred Language"
+msgstr ""
+
+#: src/apps/user/models.py:34
+msgid "Users"
+msgstr ""
+
+#: src/apps/user/serializers/base.py:65
+msgid "Invalid plant area format."
+msgstr ""
+
+#: src/frontend/templates/admin/app_list.html:10
+#, python-format
+msgid "Models in the %(name)s application"
+msgstr "Modelos en la aplicación %(name)s"
+
+#: src/frontend/templates/admin/app_list.html:14
+msgid "Model name"
+msgstr "Nombre del modelo"
+
+#: src/frontend/templates/admin/app_list.html:17
+#: src/frontend/templates/admin/app_list.html:39
+msgid "Add"
+msgstr "Añadir"
+
+#: src/frontend/templates/admin/app_list.html:20
+msgid "Change or View"
+msgstr "Cambiar o ver"
+
+#: src/frontend/templates/admin/app_list.html:48
+msgid "View"
+msgstr "Ver"
+
+#: src/frontend/templates/admin/app_list.html:52
+msgid "Change"
+msgstr "Cambiar"
+
+#: src/frontend/templates/admin/app_list.html:65
+msgid "You don’t have permission to view or edit anything."
+msgstr "No tienes permiso para ver o editar nada."
+
+#: src/frontend/templates/admin/base_site.html:20
+msgid "Environment"
+msgstr "Entorno"
+
+#: src/frontend/templates/admin/base_site.html:39
+msgid "Documentation"
+msgstr "Documentación"
+
+#: src/frontend/templates/admin/base_site.html:43
+msgid "Change password"
+msgstr "Cambiar la contraseña"
+
+#: src/frontend/templates/admin/base_site.html:45
+msgid "Log out"
+msgstr "Cerrar sesión"
+
+#: src/frontend/templates/admin/base_site.html:53
+msgid "Delete?"
+msgstr "¿Eliminar?"
+
+#: src/frontend/templates/admin/invoice/invoice/change_list.html:5
+msgid "Import from SEFAZ"
+msgstr "Importar desde SEFAZ"
+
+#: src/proj_settings/admin_custom.py:26
+msgid "Celery - Background Tasks"
+msgstr ""
+
+#: src/proj_settings/admin_custom.py:33
+msgid "User Management"
+msgstr ""
+
+#: src/proj_settings/settings.py:43
+msgid "Local"
+msgstr ""
+
+#: src/proj_settings/settings.py:44
+msgid "Development"
+msgstr ""
+
+#: src/proj_settings/settings.py:45
+msgid "QA"
+msgstr ""
+
+#: src/proj_settings/utils.py:148
+msgid "{} years and {} months"
+msgstr ""

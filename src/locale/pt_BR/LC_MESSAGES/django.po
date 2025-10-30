@@ -1,0 +1,723 @@
+# Brazilian Portuguese translations for project.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: canhoto_digital\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-10-30 20:11+0000\n"
+"PO-Revision-Date: 2025-10-29 00:00+0000\n"
+"Last-Translator: Auto-generated\n"
+"Language-Team: Portuguese (Brazil)\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: src/apps/celery_log/admin.py:56
+msgid "Parameters"
+msgstr "Parâmetros"
+
+#: src/apps/celery_log/admin.py:63
+msgid "Result"
+msgstr "Resultado"
+
+#: src/apps/celery_log/admin.py:308
+msgid "Timestamp"
+msgstr "Data e hora"
+
+#: src/apps/celery_log/apps.py:8
+msgid "Task Results"
+msgstr "Resultados de Tarefas"
+
+#: src/apps/celery_log/models.py:25
+msgid "Task Log"
+msgstr "Log de Tarefa"
+
+#: src/apps/celery_log/models.py:26
+msgid "Task Logs"
+msgstr "Logs de Tarefas"
+
+#: src/apps/celery_log/models.py:38 src/apps/celery_log/models.py:39
+msgid "Task Log Statistics"
+msgstr "Estatísticas do Log de Tarefas"
+
+#: src/apps/company/admin.py:22
+msgid "IDENTIFICATION"
+msgstr "IDENTIFICAÇÃO"
+
+#: src/apps/company/admin.py:26
+msgid "TAX REGISTRATION"
+msgstr "INSCRIÇÃO FISCAL"
+
+#: src/apps/company/admin.py:31
+msgid "ADDRESS"
+msgstr "ENDEREÇO"
+
+#: src/apps/company/admin.py:63 src/apps/core/models.py:55
+#: src/apps/delivery/admin.py:43
+msgid "Created at"
+msgstr "Criado em"
+
+#: src/apps/company/admin.py:71 src/apps/company/admin.py:75
+#: src/apps/invoice/models.py:42
+#: src/frontend/templates/admin/company/company/change_form.html:14
+msgid "Invoices"
+msgstr "Notas fiscais"
+
+#: src/apps/company/admin.py:82 src/apps/company/admin.py:86
+#: src/apps/delivery/models.py:31
+#: src/frontend/templates/admin/company/company/change_form.html:17
+msgid "Deliveries"
+msgstr "Entregas"
+
+#: src/apps/company/apps.py:7 src/apps/company/models.py:110
+#: src/apps/invoice/models.py:13 src/proj_settings/admin_custom.py:18
+msgid "Company"
+msgstr "Empresa"
+
+#: src/apps/company/constants.py:4 src/proj_settings/settings.py:46
+msgid "Production"
+msgstr "Produção"
+
+#: src/apps/company/constants.py:5
+msgid "Homologation"
+msgstr "Homologação"
+
+#: src/apps/company/models.py:19
+msgid "Trade name"
+msgstr "Nome fantasia"
+
+#: src/apps/company/models.py:20
+msgid "Public/commercial trade name"
+msgstr "Nome público/comercial"
+
+#: src/apps/company/models.py:24
+msgid "Legal name"
+msgstr "Razão social"
+
+#: src/apps/company/models.py:25
+msgid "Registered legal name"
+msgstr "Razão Social"
+
+#: src/apps/company/models.py:30
+msgid "CNPJ"
+msgstr "CNPJ"
+
+#: src/apps/company/models.py:38
+msgid "State registration (IE)"
+msgstr "Inscrição estadual (IE)"
+
+#: src/apps/company/models.py:46
+msgid "SEFAZ environment"
+msgstr "Ambiente da SEFAZ"
+
+#: src/apps/company/models.py:50
+msgid "Enable SEFAZ sync"
+msgstr "Habilitar sincronização com a SEFAZ"
+
+#: src/apps/company/models.py:58
+msgid "Digital certificate (A1)"
+msgstr "Certificado digital (A1)"
+
+#: src/apps/company/models.py:59
+msgid "e-CNPJ (A1) certificate file (.pfx/.p12)"
+msgstr "Arquivo de certificado e-CNPJ (A1) (.pfx/.p12)"
+
+#: src/apps/company/models.py:65
+msgid "Certificate password"
+msgstr "Senha do certificado"
+
+#: src/apps/company/models.py:66
+msgid "Password for the digital certificate file"
+msgstr "Senha do arquivo de certificado digital"
+
+#: src/apps/company/models.py:72
+msgid "Certificate serial number"
+msgstr "Número de série do certificado"
+
+#: src/apps/company/models.py:77
+msgid "Certificate expiration"
+msgstr "Validade do certificado"
+
+#: src/apps/company/models.py:83
+msgid "Last NSU"
+msgstr "Último NSU"
+
+#: src/apps/company/models.py:84
+msgid "Last processed NSU for DF-e distribution"
+msgstr "Último NSU processado para distribuição DF-e"
+
+#: src/apps/company/models.py:89
+msgid "Last NSU updated at"
+msgstr "Último NSU atualizado em"
+
+#: src/apps/company/models.py:97
+msgid "CSC ID"
+msgstr "ID do CSC"
+
+#: src/apps/company/models.py:98
+msgid "NFC-e only (Taxpayer Security Code ID)"
+msgstr "Somente NFC-e (ID do Código de Segurança do Contribuinte)"
+
+#: src/apps/company/models.py:104
+msgid "CSC token"
+msgstr "Token do CSC"
+
+#: src/apps/company/models.py:105
+msgid "NFC-e only (Taxpayer Security Code token)"
+msgstr "Somente NFC-e (token do Código de Segurança do Contribuinte)"
+
+#: src/apps/company/models.py:107
+msgid "Is Active"
+msgstr "Ativo"
+
+#: src/apps/company/models.py:111
+msgid "Companies"
+msgstr "Empresas"
+
+#: src/apps/core/admin_actions.py:10
+msgid "All items have been enabled."
+msgstr "Todos os itens foram habilitados."
+
+#: src/apps/core/admin_actions.py:18
+msgid "All items have been disabled."
+msgstr "Todos os itens foram desabilitados."
+
+#: src/apps/core/admin_actions.py:29
+msgid "All notifications have been enabled."
+msgstr "Todas as notificações foram habilitadas."
+
+#: src/apps/core/admin_actions.py:40
+msgid "All notifications have been disabled."
+msgstr "Todas as notificações foram desabilitadas."
+
+#: src/apps/core/admin_actions.py:44
+msgid "Activate"
+msgstr "Ativar"
+
+#: src/apps/core/admin_actions.py:47
+msgid "Deactivate"
+msgstr "Desativar"
+
+#: src/apps/core/admin_actions.py:50
+msgid "Deactivate Notifications"
+msgstr "Desativar notificações"
+
+#: src/apps/core/admin_actions.py:53
+msgid "Re-enable Email Notifications"
+msgstr "Reativar notificações por e-mail"
+
+#: src/apps/core/admin_filters.py:24
+msgid "Area"
+msgstr "Área"
+
+#: src/apps/core/admin_filters.py:49
+msgid "Section"
+msgstr "Seção"
+
+#: src/apps/core/apps.py:7
+msgid "Core"
+msgstr "Core"
+
+#: src/apps/core/forms.py:8
+msgid "New password"
+msgstr "Nova senha"
+
+#: src/apps/core/forms.py:11
+msgid "New password (verify)"
+msgstr "Nova senha (confirmação)"
+
+#: src/apps/core/forms.py:30
+msgid "The two password fields didn't match."
+msgstr "Os dois campos de senha não coincidem."
+
+#: src/apps/core/models.py:14 src/apps/core/models.py:113
+#: src/apps/user/models.py:33
+msgid "User"
+msgstr "Usuário"
+
+#: src/apps/core/models.py:15
+msgid "Store"
+msgstr "Loja"
+
+#: src/apps/core/models.py:28
+msgid "Sort"
+msgstr "Ordenação"
+
+#: src/apps/core/models.py:58
+msgid "Updated at"
+msgstr "Atualizado em"
+
+#: src/apps/core/models.py:89
+msgid "Profile Type"
+msgstr "Tipo de Perfil"
+
+#: src/apps/core/models.py:90
+msgid "Type of profile this terms of service applies to"
+msgstr "Tipo de perfil ao qual estes termos de serviço se aplicam"
+
+#: src/apps/core/models.py:92
+msgid "Terms of Service text"
+msgstr "Texto dos Termos de Serviço"
+
+#: src/apps/core/models.py:93
+msgid "The actual terms of service content"
+msgstr "O conteúdo dos termos de serviço"
+
+#: src/apps/core/models.py:97
+msgid "Terms of Service"
+msgstr "Termos de Serviço"
+
+#: src/apps/core/models.py:98
+msgid "Terms of service"
+msgstr "Termos de serviço"
+
+#: src/apps/core/models.py:109
+msgid "Host"
+msgstr "Host"
+
+#: src/apps/core/models.py:110
+msgid "SMTP server hostname or IP address"
+msgstr "Nome do host ou endereço IP do servidor SMTP"
+
+#: src/apps/core/models.py:111
+msgid "Port"
+msgstr "Porta"
+
+#: src/apps/core/models.py:112
+msgid "SMTP server port (usually 587 for TLS or 465 for SSL)"
+msgstr "Porta do servidor SMTP (geralmente 587 para TLS ou 465 para SSL)"
+
+#: src/apps/core/models.py:114
+msgid "Username for SMTP authentication"
+msgstr "Nome de usuário para autenticação SMTP"
+
+#: src/apps/core/models.py:115
+msgid "Password"
+msgstr "Senha"
+
+#: src/apps/core/models.py:116
+msgid "Password for SMTP authentication"
+msgstr "Senha para autenticação SMTP"
+
+#: src/apps/core/models.py:117
+msgid "Use TLS"
+msgstr "Usar TLS"
+
+#: src/apps/core/models.py:118
+msgid "Enable TLS encryption for secure connection"
+msgstr "Habilitar criptografia TLS para conexão segura"
+
+#: src/apps/core/models.py:119
+msgid "Use SSL"
+msgstr "Usar SSL"
+
+#: src/apps/core/models.py:120
+msgid "Enable SSL encryption for secure connection"
+msgstr "Habilitar criptografia SSL para conexão segura"
+
+#: src/apps/core/models.py:121
+msgid "Timeout"
+msgstr "Tempo limite"
+
+#: src/apps/core/models.py:122
+msgid "Connection timeout in seconds"
+msgstr "Tempo limite de conexão em segundos"
+
+#: src/apps/core/models.py:123
+msgid "SSL Keyfile"
+msgstr "Arquivo de chave SSL"
+
+#: src/apps/core/models.py:124
+msgid "SSL private key file for client certificate authentication"
+msgstr ""
+"Arquivo de chave privada SSL para autenticação com certificado do cliente"
+
+#: src/apps/core/models.py:125
+msgid "SSL Certfile"
+msgstr "Arquivo de certificado SSL"
+
+#: src/apps/core/models.py:126
+msgid "SSL certificate file for client certificate authentication"
+msgstr ""
+"Arquivo de certificado SSL para autenticação com certificado do cliente"
+
+#: src/apps/core/models.py:127
+msgid "Active"
+msgstr "Ativo"
+
+#: src/apps/core/models.py:128
+msgid "Whether this SMTP configuration is currently active"
+msgstr "Indica se esta configuração SMTP está ativa"
+
+#: src/apps/core/models.py:131 src/apps/core/models.py:132
+msgid "Email Settings"
+msgstr "Configurações de E-mail"
+
+#: src/apps/core/models.py:152
+msgid "Audit Log"
+msgstr "Log de Auditoria"
+
+#: src/apps/core/models.py:153
+msgid "Audit Logs"
+msgstr "Logs de Auditoria"
+
+#: src/apps/core/models.py:218 src/apps/invoice/models.py:22
+msgid "Street"
+msgstr "Rua"
+
+#: src/apps/core/models.py:219 src/apps/invoice/models.py:16
+#: src/apps/invoice/models.py:23
+msgid "Number"
+msgstr "Número"
+
+#: src/apps/core/models.py:220 src/apps/invoice/models.py:25
+msgid "Neighborhood"
+msgstr "Bairro"
+
+#: src/apps/core/models.py:221 src/apps/invoice/models.py:26
+msgid "City"
+msgstr "Cidade"
+
+#: src/apps/core/models.py:227 src/apps/invoice/models.py:32
+msgid "State (UF)"
+msgstr "Estado (UF)"
+
+#: src/apps/core/models.py:229 src/apps/invoice/models.py:34
+msgid "Zip Code"
+msgstr "CEP"
+
+#: src/apps/core/views/http_status.py:8
+msgid "Access Denied"
+msgstr "Acesso negado"
+
+#: src/apps/core/views/http_status.py:16
+msgid "Page Not Found"
+msgstr "Página não encontrada"
+
+#: src/apps/delivery/admin.py:31
+msgid "DELIVERY DATA"
+msgstr "DADOS DA ENTREGA"
+
+#: src/apps/delivery/admin.py:51 src/apps/delivery/models.py:27
+msgid "Delivery at"
+msgstr "Entregue em"
+
+#: src/apps/delivery/admin.py:62
+msgid "Number/Series"
+msgstr "Número/Série"
+
+#: src/apps/delivery/admin.py:63 src/apps/invoice/models.py:18
+msgid "Key"
+msgstr "Chave"
+
+#: src/apps/delivery/admin.py:64
+msgid "Total Value"
+msgstr "Valor total"
+
+#: src/apps/delivery/admin.py:65 src/apps/invoice/models.py:21
+msgid "Recipient Name"
+msgstr "Nome do destinatário"
+
+#: src/apps/delivery/admin.py:69
+msgid "Identification"
+msgstr "Identificação"
+
+#: src/apps/delivery/admin.py:85
+msgid "Delivery Address"
+msgstr "Endereço de entrega"
+
+#: src/apps/delivery/apps.py:7 src/apps/delivery/models.py:30
+#: src/apps/delivery/models.py:43 src/proj_settings/admin_custom.py:22
+msgid "Delivery"
+msgstr "Entrega"
+
+#: src/apps/delivery/constants.py:4
+msgid "Pending"
+msgstr "Pendente"
+
+#: src/apps/delivery/constants.py:5
+msgid "Delivered"
+msgstr "Entregue"
+
+#: src/apps/delivery/constants.py:6
+msgid "Failed"
+msgstr "Falha"
+
+#: src/apps/delivery/constants.py:7
+msgid "Partial"
+msgstr "Parcial"
+
+#: src/apps/delivery/models.py:15 src/apps/invoice/apps.py:7
+#: src/apps/invoice/models.py:41
+msgid "Invoice"
+msgstr "Nota fiscal"
+
+#: src/apps/delivery/models.py:22
+msgid "Assigned to"
+msgstr "Atribuído a"
+
+#: src/apps/delivery/models.py:24
+msgid "Observations"
+msgstr "Observações"
+
+#: src/apps/delivery/models.py:26 src/apps/invoice/models.py:38
+msgid "Status"
+msgstr "Status"
+
+#: src/apps/delivery/models.py:45
+msgid "Received by"
+msgstr "Recebido por"
+
+#: src/apps/delivery/models.py:46
+msgid "Received by Document"
+msgstr "Documento de quem recebeu"
+
+#: src/apps/delivery/models.py:47
+msgid "Signed at"
+msgstr "Assinado em"
+
+#: src/apps/delivery/models.py:49
+msgid "Signed at Server"
+msgstr "Assinado no servidor"
+
+#: src/apps/delivery/models.py:50
+msgid "Geo Lat"
+msgstr "Latitude"
+
+#: src/apps/delivery/models.py:51
+msgid "Geo Lng"
+msgstr "Longitude"
+
+#: src/apps/delivery/models.py:53
+msgid "Signature Image"
+msgstr "Imagem da assinatura"
+
+#: src/apps/delivery/models.py:55
+msgid "Photos"
+msgstr "Fotos"
+
+#: src/apps/delivery/models.py:56
+msgid "Meta"
+msgstr "Metadados"
+
+#: src/apps/delivery/models.py:59
+msgid "Proof of Delivery"
+msgstr "Prova da Entrega"
+
+#: src/apps/delivery/models.py:60
+msgid "Proof of Deliveries"
+msgstr "Prova das Entregas"
+
+#: src/apps/invoice/admin.py:37
+msgid "NF-e DATA"
+msgstr "DADOS DA NF-e"
+
+#: src/apps/invoice/admin.py:42
+msgid "RECIPIENT DATA"
+msgstr "DADOS DO DESTINATÁRIO"
+
+#: src/apps/invoice/admin.py:47
+msgid "RECIPIENT ADDRESS"
+msgstr "ENDEREÇO DO DESTINATÁRIO"
+
+#: src/apps/invoice/admin.py:114
+msgid "Download XML from SEFAZ"
+msgstr "Baixar o XML da SEFAZ"
+
+#: src/apps/invoice/admin.py:138
+msgid "Generate DANFE (from XML)"
+msgstr "Gerar o DANFE (do XML)"
+
+#: src/apps/invoice/admin.py:143
+msgid "You do not have permission to generate DANFE for this invoice."
+msgstr "Você não tem permissão para gerar o DANFE desta Nota Fiscal."
+
+#: src/apps/invoice/admin.py:147
+msgid "DANFE generated and saved successfully."
+msgstr "DANFE gerado e salvo com sucesso"
+
+#: src/apps/invoice/admin.py:155
+msgid "You do not have permission to download XML for this invoice."
+msgstr "Você não tem permissão para baixar o XML desta Nota Fiscal."
+
+#: src/apps/invoice/admin.py:159
+msgid "Invoice has no valid NF-e key (44 chars)."
+msgstr "Nota Fiscal não tem uma chave valida (44 caracteres)"
+
+#: src/apps/invoice/admin.py:167
+msgid ""
+"XML saved, but SEFAZ returned a summary (resNFe). Full DANFE may not be "
+"possible."
+msgstr ""
+
+#: src/apps/invoice/admin.py:169
+msgid "XML downloaded from SEFAZ and saved successfully."
+msgstr "XML baixado da SEFAZ e salvo com sucesso."
+
+#: src/apps/invoice/models.py:17
+msgid "Series"
+msgstr "Serie"
+
+#: src/apps/invoice/models.py:19
+msgid "Issuer Name"
+msgstr "Nome do Emissor"
+
+#: src/apps/invoice/models.py:20
+msgid "Issue date"
+msgstr "Data de emissão"
+
+#: src/apps/invoice/models.py:35
+msgid "Total value"
+msgstr "Valor Total"
+
+#: src/apps/invoice/models.py:36
+msgid "XML file"
+msgstr "Arquivo XML"
+
+#: src/apps/invoice/models.py:37
+msgid "PDF file"
+msgstr "Arquivo PDF"
+
+#: src/apps/user/admin.py:17
+msgid "Personal info"
+msgstr "Informações pessoais"
+
+#: src/apps/user/admin.py:25
+msgid "Notifications"
+msgstr "Notificações"
+
+#: src/apps/user/admin.py:31
+msgid "Admin Permissions"
+msgstr "Permissões de administrador"
+
+#: src/apps/user/admin.py:34
+msgid "Important dates"
+msgstr "Datas importantes"
+
+#: src/apps/user/admin.py:56
+msgid "Group"
+msgstr "Grupo"
+
+#: src/apps/user/admin.py:57
+msgid "Groups"
+msgstr "Grupos"
+
+#: src/apps/user/apps.py:7
+msgid "Authentication and Authorization"
+msgstr "Autenticação e Autorização"
+
+#: src/apps/user/models.py:16
+msgid "Allow Email Notifications"
+msgstr "Permitir notificações por e-mail"
+
+#: src/apps/user/models.py:17
+msgid "Allow Push Notifications"
+msgstr "Permitir notificações por push"
+
+#: src/apps/user/models.py:18
+msgid "Allow SMS Notifications"
+msgstr "Permitir notificações por SMS"
+
+#: src/apps/user/models.py:19
+msgid "Allow WhatsApp Notifications"
+msgstr "Permitir notificações por WhatsApp"
+
+#: src/apps/user/models.py:26
+msgid "Preferred Language"
+msgstr "Idioma preferido"
+
+#: src/apps/user/models.py:34
+msgid "Users"
+msgstr "Usuários"
+
+#: src/apps/user/serializers/base.py:65
+msgid "Invalid plant area format."
+msgstr "Formato de área da planta inválido."
+
+#: src/frontend/templates/admin/app_list.html:10
+#, python-format
+msgid "Models in the %(name)s application"
+msgstr "Modelos no aplicativo %(name)s"
+
+#: src/frontend/templates/admin/app_list.html:14
+msgid "Model name"
+msgstr "Nome do modelo"
+
+#: src/frontend/templates/admin/app_list.html:17
+#: src/frontend/templates/admin/app_list.html:39
+msgid "Add"
+msgstr "Adicionar"
+
+#: src/frontend/templates/admin/app_list.html:20
+msgid "Change or View"
+msgstr "Alterar ou visualizar"
+
+#: src/frontend/templates/admin/app_list.html:48
+msgid "View"
+msgstr "Visualizar"
+
+#: src/frontend/templates/admin/app_list.html:52
+msgid "Change"
+msgstr "Alterar"
+
+#: src/frontend/templates/admin/app_list.html:65
+msgid "You don’t have permission to view or edit anything."
+msgstr "Você não tem permissão para ver ou editar nada."
+
+#: src/frontend/templates/admin/base_site.html:20
+msgid "Environment"
+msgstr "Ambiente"
+
+#: src/frontend/templates/admin/base_site.html:39
+msgid "Documentation"
+msgstr "Documentação"
+
+#: src/frontend/templates/admin/base_site.html:43
+msgid "Change password"
+msgstr "Alterar senha"
+
+#: src/frontend/templates/admin/base_site.html:45
+msgid "Log out"
+msgstr "Sair"
+
+#: src/frontend/templates/admin/base_site.html:53
+msgid "Delete?"
+msgstr "Excluir?"
+
+#: src/frontend/templates/admin/invoice/invoice/change_form.html:14
+msgid "Download XML"
+msgstr "Baixar XML"
+
+#: src/frontend/templates/admin/invoice/invoice/change_form.html:19
+msgid "Generate DANFE"
+msgstr "Gerar DANFE"
+
+#: src/frontend/templates/admin/invoice/invoice/change_list.html:5
+msgid "Import from SEFAZ"
+msgstr "Importar da SEFAZ"
+
+#: src/proj_settings/admin_custom.py:26
+msgid "Celery - Background Tasks"
+msgstr "Celery - Tarefas em Segundo Plano"
+
+#: src/proj_settings/admin_custom.py:33
+msgid "User Management"
+msgstr "Gerenciamento de Usuário"
+
+#: src/proj_settings/settings.py:43
+msgid "Local"
+msgstr "Local"
+
+#: src/proj_settings/settings.py:44
+msgid "Development"
+msgstr "Desenvolvimento"
+
+#: src/proj_settings/settings.py:45
+msgid "QA"
+msgstr "QA"
+
+#: src/proj_settings/utils.py:148
+msgid "{} years and {} months"
+msgstr "{} anos e {} meses"
