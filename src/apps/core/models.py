@@ -8,6 +8,8 @@ from django_models.models import SignalsModel, UUIDModel
 from django_models.models.generic import CodeModel
 from django_models.models.managers import SignalsManager
 
+from apps.core.constants import UF_CHOICES
+
 TERMS_OF_SERVICE_TYPES = (
     ('user', _('User')),
     ('store', _('Store')),
@@ -210,3 +212,21 @@ class TranslatableFieldMixin:
                     "pt-br": "",
                     "es": ""
                 }
+
+
+class AddressFieldsMixin(models.Model):
+    address_street = models.CharField(max_length=255, blank=True, default="", verbose_name=_("Street"))
+    address_number = models.CharField(max_length=255, blank=True, default="", verbose_name=_("Number"))
+    address_neighborhood = models.CharField(max_length=255, blank=True, default="", verbose_name=_("Neighborhood"))
+    address_city = models.CharField(max_length=255, blank=True, default="", verbose_name=_("City"))
+    address_uf = models.CharField(
+        max_length=2,
+        choices=UF_CHOICES,
+        blank=True,
+        default="",
+        verbose_name=_("State (UF)"),
+    )
+    address_zip_code = models.CharField(max_length=12, blank=True, default="", verbose_name=_("Zip Code"))
+
+    class Meta:
+        abstract = True
