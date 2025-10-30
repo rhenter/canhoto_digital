@@ -1,15 +1,22 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+import re
 
-from apps.core.models import BaseModel
-from .constants import UF_CHOICES, SEFAZ_ENV_CHOICES
+from apps.core.models import BaseModel, AddressFieldsMixin
+from .constants import SEFAZ_ENV_CHOICES
 
 
-class Company(BaseModel):
+def _only_digits(value: str | None) -> str | None:
+    if value is None:
+        return None
+    return re.sub(r"\D+", "", value)
+
+
+class Company(AddressFieldsMixin, BaseModel):
     # Basic identification
     name = models.CharField(
         max_length=500,
-        verbose_name=_("Trade name"),
+        verbose_name=(_("Trade name")),
         help_text=_("Public/commercial trade name"),
     )
     legal_name = models.CharField(
@@ -29,14 +36,6 @@ class Company(BaseModel):
         blank=True,
         null=True,
         verbose_name=_("State registration (IE)"),
-    )
-
-    uf = models.CharField(
-        max_length=2,
-        choices=UF_CHOICES,
-        blank=True,
-        null=True,
-        verbose_name=_("State (UF)"),
     )
 
     # SEFAZ environment/config    
@@ -114,3 +113,16 @@ class Company(BaseModel):
 
     def __str__(self):
         return f"{self.name} ({self.cnpj})"
+
+    def clean(self):
+        # Ensure numeric-only storage for CNPJ and IE
+        self.cnpj = _only_digits(self.cnpj) or ""
+        if self.inscricao_estadual is not None:
+            ie_digits = _only_digits(self.inscricao_estadual)
+            # Keep empty string for blank field if no digits provided
+            self.inscricao_estadual = ie_digits or ""
+
+    def save(self, *args, **kwargs):
+        # Normalize before saving regardless of caller using full_clean()
+        self.clean()
+        return super().save(*args, **kwargs)
