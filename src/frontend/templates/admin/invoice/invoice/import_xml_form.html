@@ -1,0 +1,11 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+{% block content %}
+<h1>{% trans "Import Invoice from XML" %}</h1>
+<form method="post" enctype="multipart/form-data" novalidate>
+  {% csrf_token %}
+  <table>{{ form.as_table }}</table>
+  <input type="submit" value="{% trans 'Import' %}" class="default">
+  <a href="{% url 'admin:invoice_invoice_changelist' %}">{% trans 'Cancel' %}</a>
+</form>
+{% endblock %}

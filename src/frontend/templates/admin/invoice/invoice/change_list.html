@@ -3,4 +3,5 @@
 {% block object-tools-items %}
 {{ block.super }}
 <li><a href="{% url 'admin:invoice_import_sefaz' %}" class="addlink">{% trans 'Import from SEFAZ' %}</a></li>
+<li><a href="{% url 'admin:invoice_import_xml' %}" class="addlink">{% trans 'Import invoice from XML' %}</a></li>
 {% endblock %}
