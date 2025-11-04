@@ -13,6 +13,7 @@ class DeliverySerializer(serializers.ModelSerializer):
             "id",
             "code",
             "status",
+            "invoice",
             "observations",
             "assigned_to",
             "created_at",

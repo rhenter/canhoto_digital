@@ -39,14 +39,10 @@ class UserBaseSerializer(serializers.ModelSerializer):
 
 class UserProfileSerializer(UserBaseSerializer):
     name = serializers.CharField(source='get_full_name', required=False)
-    subscription_incident_types = serializers.SerializerMethodField()
 
     class Meta:
         model = User
         fields = ['name'] + USER_FIELDS
-
-    def get_subscription_incident_types(self, obj):
-        return [incident_type.slug for incident_type in obj.subscription_incident_types.all()]
 
 
 class UserCreateUpdateSerializer(UserBaseSerializer):

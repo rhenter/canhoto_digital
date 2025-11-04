@@ -15,6 +15,12 @@ class DeliveryViewSet(viewsets.ModelViewSet):
     search_fields = ["code", "address", "recipient_expected"]
     ordering_fields = ["created_at", "code", "status"]
 
+    def get_queryset(self):
+        qs = super().get_queryset()
+        if self.request.user.is_superuser:
+            return qs
+        return qs.filter(assigned_to=self.request.user)
+
     def get_permissions(self):
         if self.action in ["create", "update", "partial_update", "destroy"]:
             return [IsAdminUser()]

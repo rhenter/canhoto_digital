@@ -1,8 +1,15 @@
+from typing import Any
+
+from django.contrib.auth.models import update_last_login
 from rest_framework import serializers
 from rest_framework.serializers import raise_errors_on_nested_writes
 from rest_framework.utils import model_meta
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenObtainSerializer
+from rest_framework_simplejwt.settings import api_settings
+from rest_framework_simplejwt.tokens import RefreshToken
 
 from .models import TermsOfService
+from ..user.serializers import UserProfileSerializer
 
 
 class TermsOfServiceSerializer(serializers.ModelSerializer):
@@ -20,7 +27,6 @@ class TermsOfServiceSerializer(serializers.ModelSerializer):
 
 class ToggleSerializer(serializers.Serializer):
     value = serializers.BooleanField()
-
 
 
 class AuditChangesSerializer(serializers.ModelSerializer):
