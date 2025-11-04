@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: canhoto_digital\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-30 20:11+0000\n"
+"POT-Creation-Date: 2025-10-31 12:18+0000\n"
 "PO-Revision-Date: 2025-10-29 00:00+0000\n"
 "Last-Translator: Auto-generated\n"
 "Language-Team: Portuguese (Brazil)\n"
@@ -42,34 +42,75 @@ msgstr "Logs de Tarefas"
 msgid "Task Log Statistics"
 msgstr "Estatísticas do Log de Tarefas"
 
-#: src/apps/company/admin.py:22
+#: src/apps/company/admin.py:26
 msgid "IDENTIFICATION"
 msgstr "IDENTIFICAÇÃO"
 
-#: src/apps/company/admin.py:26
+#: src/apps/company/admin.py:30
 msgid "TAX REGISTRATION"
 msgstr "INSCRIÇÃO FISCAL"
 
-#: src/apps/company/admin.py:31
+#: src/apps/company/admin.py:35
 msgid "ADDRESS"
 msgstr "ENDEREÇO"
 
-#: src/apps/company/admin.py:63 src/apps/core/models.py:55
+#: src/apps/company/admin.py:67 src/apps/core/models.py:55
 #: src/apps/delivery/admin.py:43
 msgid "Created at"
 msgstr "Criado em"
 
-#: src/apps/company/admin.py:71 src/apps/company/admin.py:75
+#: src/apps/company/admin.py:75 src/apps/company/admin.py:79
 #: src/apps/invoice/models.py:42
 #: src/frontend/templates/admin/company/company/change_form.html:14
 msgid "Invoices"
 msgstr "Notas fiscais"
 
-#: src/apps/company/admin.py:82 src/apps/company/admin.py:86
+#: src/apps/company/admin.py:86 src/apps/company/admin.py:90
 #: src/apps/delivery/models.py:31
 #: src/frontend/templates/admin/company/company/change_form.html:17
 msgid "Deliveries"
 msgstr "Entregas"
+
+#: src/apps/company/admin.py:99
+msgid "Within SEFAZ cooldown window"
+msgstr ""
+
+#: src/apps/company/admin.py:100
+#, python-format
+msgid "Cooldown: ~%(minutes)d min left"
+msgstr ""
+
+#: src/apps/company/admin.py:104
+msgid "Outside SEFAZ cooldown window"
+msgstr ""
+
+#: src/apps/company/admin.py:105
+msgid "Ready"
+msgstr ""
+
+#: src/apps/company/admin.py:108
+msgid "SEFAZ cooldown"
+msgstr ""
+
+#: src/apps/company/admin.py:124
+#, python-format
+msgid ""
+"NSU reset blocked for %(company)s: still within SEFAZ cooldown window "
+"(%(minutes)d minutes)."
+msgstr ""
+
+#: src/apps/company/admin.py:133
+#, python-format
+msgid "Safely reset NSU for %(count)d compan(ies)."
+msgstr ""
+
+#: src/apps/company/admin.py:135
+msgid "No companies selected for NSU reset."
+msgstr ""
+
+#: src/apps/company/admin.py:137
+msgid "Safe NSU reset (respects SEFAZ cooldown)"
+msgstr ""
 
 #: src/apps/company/apps.py:7 src/apps/company/models.py:110
 #: src/apps/invoice/models.py:13 src/proj_settings/admin_custom.py:18
@@ -83,6 +124,77 @@ msgstr "Produção"
 #: src/apps/company/constants.py:5
 msgid "Homologation"
 msgstr "Homologação"
+
+#: src/apps/company/forms.py:29
+#, python-format
+msgid ""
+"Last processed NSU for DF-e distribution. Avoid resetting to 0 unless "
+"strictly necessary. If you reset it, you must wait at least %(minutes)d "
+"minutes before attempting any new DF-e requests to avoid SEFAZ cStat=656 "
+"(Improper Consumption)."
+msgstr ""
+
+#: src/apps/company/forms.py:33
+msgid ""
+"Timestamp of the last NSU update/reset used to evaluate the SEFAZ cooldown "
+"window."
+msgstr ""
+
+#: src/apps/company/management/commands/sefaz_safe_bootstrap.py:16
+msgid ""
+"Safely reset DF-e NSU (set last_nsu=0) for a company, respecting SEFAZ "
+"cooldown window."
+msgstr ""
+
+#: src/apps/company/management/commands/sefaz_safe_bootstrap.py:23
+msgid "Company UUID (primary key)."
+msgstr ""
+
+#: src/apps/company/management/commands/sefaz_safe_bootstrap.py:28
+msgid "Company CNPJ (digits only or formatted)."
+msgstr ""
+
+#: src/apps/company/management/commands/sefaz_safe_bootstrap.py:34
+msgid "Force reset even within cooldown window (not recommended)."
+msgstr ""
+
+#: src/apps/company/management/commands/sefaz_safe_bootstrap.py:43
+msgid "You must provide either --company-id or --cnpj."
+msgstr ""
+
+#: src/apps/company/management/commands/sefaz_safe_bootstrap.py:55
+msgid "Company not found with the given identifier."
+msgstr ""
+
+#: src/apps/company/management/commands/sefaz_safe_bootstrap.py:57
+msgid "Multiple companies matched. Please specify a unique identifier."
+msgstr ""
+
+#: src/apps/company/management/commands/sefaz_safe_bootstrap.py:67
+#, python-format
+msgid ""
+"Blocked by SEFAZ cooldown. Try again in ~%(minutes)d minute(s) or use --"
+"force."
+msgstr ""
+
+#: src/apps/company/management/commands/sefaz_safe_bootstrap.py:79
+#, python-format
+msgid ""
+"NSU reset forced within cooldown window for '%(name)s' (CNPJ %(cnpj)s). "
+"Proceed with caution."
+msgstr ""
+
+#: src/apps/company/management/commands/sefaz_safe_bootstrap.py:84
+#, python-format
+msgid "NSU reset successfully for '%(name)s' (CNPJ %(cnpj)s)."
+msgstr ""
+
+#: src/apps/company/management/commands/sefaz_safe_bootstrap.py:90
+#, python-format
+msgid ""
+"Reminder: After resetting NSU, wait at least %(minutes)d minutes before "
+"running DF-e import to avoid cStat=656."
+msgstr ""
 
 #: src/apps/company/models.py:19
 msgid "Trade name"
@@ -522,6 +634,10 @@ msgstr "DADOS DO DESTINATÁRIO"
 msgid "RECIPIENT ADDRESS"
 msgstr "ENDEREÇO DO DESTINATÁRIO"
 
+#: src/apps/invoice/admin.py:81
+msgid "Invoices from"
+msgstr "Notas Fiscais de"
+
 #: src/apps/invoice/admin.py:114
 msgid "Download XML from SEFAZ"
 msgstr "Baixar o XML da SEFAZ"
@@ -580,6 +696,22 @@ msgstr "Arquivo XML"
 msgid "PDF file"
 msgstr "Arquivo PDF"
 
+#: src/apps/invoice/sefaz/main.py:195
+#, python-format
+msgid ""
+"SEFAZ cStat=656 (Rejection: Improper Consumption). You must use the last "
+"valid ultNSU in subsequent requests. Please wait at least %(minutes)d "
+"minutes before trying again and do not reset NSU to 0."
+msgstr "SEFAZ cStat=656 (Rejeição: Consumo indevido). Você deve usar o último ultNSU válido nas solicitações subsequentes. Aguarde pelo menos %(minutes)d minutos antes de tentar novamente e não redefina o NSU para 0."
+
+#: src/apps/invoice/sefaz/main.py:489
+#, python-format
+msgid ""
+"Operation temporarily blocked: NSU was recently reset. Please wait at least "
+"%(minutes)d minutes before trying again to avoid SEFAZ cStat=656 (Improper "
+"Consumption)."
+msgstr "Operação temporariamente bloqueada: o NSU foi redefinido recentemente. Aguarde pelo menos %(minutes)d minutos antes de tentar novamente para evitar o SEFAZ cStat=656 (Consumo indevido)."
+
 #: src/apps/user/admin.py:17
 msgid "Personal info"
 msgstr "Informações pessoais"
@@ -632,7 +764,7 @@ msgstr "Idioma preferido"
 msgid "Users"
 msgstr "Usuários"
 
-#: src/apps/user/serializers/base.py:65
+#: src/apps/user/serializers/base.py:61
 msgid "Invalid plant area format."
 msgstr "Formato de área da planta inválido."
 
