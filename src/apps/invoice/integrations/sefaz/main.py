@@ -1,11 +1,12 @@
 from dataclasses import dataclass
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from typing import Iterable, Optional, Tuple
 from xml.etree import ElementTree as ET
 
 import requests
 from django.conf import settings
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 from rest_framework import status
 
 from apps.company.models import Company
@@ -30,6 +31,9 @@ class SefazInvoiceData:
     # Parties
     issuer_name: str = ""
     recipient_name: str = ""
+    issuer_cnpj: str = ""
+    recipient_cnpj: str = ""
+    tp_nf: str = ""  # '0' entrada, '1' saída (when available)
     # Recipient address
     recipient_address_street: str = ""
     recipient_address_number: str = ""
@@ -185,6 +189,13 @@ class SefazClient:
 
         c_stat = _findtext_by_localname(ret_xml, "cStat") or ""
         x_motivo = _findtext_by_localname(ret_xml, "xMotivo") or ""
+        if c_stat == "656":
+            raise SefazIntegrationError(
+                str(_(
+                    "SEFAZ cStat=656 (Rejection: Improper Consumption). You must use the last valid ultNSU in subsequent requests. "
+                    "Please wait at least %(minutes)d minutes before trying again and do not reset NSU to 0."
+                )) % {"minutes": settings.SEFAZ_COOLDOWN_MINUTES}
+            )
         if c_stat not in {"137", "138", "139", "140", "141"}:
             raise SefazIntegrationError(f"SEFAZ returned error cStat={c_stat} ({x_motivo})")
         lote = _find_first_by_localname(ret_xml, "loteDistDFeInt")
@@ -376,6 +387,7 @@ class SefazClient:
             vNF = (xml_el.findtext("vNF") or "0").strip()
             chNFe = (xml_el.findtext("chNFe") or "").strip()
             xNome_emit = (xml_el.findtext("xNome") or "").strip()
+            cnpj_emit = (xml_el.findtext("CNPJ") or "").strip()
             try:
                 # dhEmi in UTC ISO format
                 issue_dt = datetime.fromisoformat(dhEmi.replace("Z", "+00:00")).date()
@@ -393,6 +405,7 @@ class SefazClient:
                     issue_date=issue_dt,
                     total_value=total,
                     issuer_name=xNome_emit,
+                    issuer_cnpj=cnpj_emit,
                     raw_xml=xml_bytes,
                     doc_kind="resNFe",
                 )
@@ -417,6 +430,9 @@ class SefazClient:
             dest = inf.find("{*}dest")
             issuer_name = emit.findtext("{*}xNome") if emit is not None else ""
             recipient_name = dest.findtext("{*}xNome") if dest is not None else ""
+            issuer_cnpj = (emit.findtext("{*}CNPJ") if emit is not None else "") or ""
+            recipient_cnpj = (dest.findtext("{*}CNPJ") if dest is not None else "") or ""
+            tp_nf = (ide.findtext("{*}tpNF") if ide is not None else "") or ""
             # Recipient address (enderDest)
             ender_dest = dest.find("{*}enderDest") if dest is not None else None
             r_xLgr = ender_dest.findtext("{*}xLgr") if ender_dest is not None else ""
@@ -442,6 +458,9 @@ class SefazClient:
                     total_value=total,
                     issuer_name=issuer_name or "",
                     recipient_name=recipient_name or "",
+                    issuer_cnpj=issuer_cnpj,
+                    recipient_cnpj=recipient_cnpj,
+                    tp_nf=tp_nf,
                     recipient_address_street=r_xLgr or "",
                     recipient_address_number=r_nro or "",
                     recipient_address_neighborhood=r_xBairro or "",
@@ -454,14 +473,42 @@ class SefazClient:
         return None
 
     def list_invoices(self, start: date, end: date) -> Iterable[SefazInvoiceData]:
-        """Yield invoices within the given date range inclusive, iterating via NSU batches."""
+        """Yield OUTGOING (saída) invoices within the given date range inclusive, iterating via NSU batches.
+
+        Filtering rule:
+        - Prefer invoices where issuer CNPJ matches the company's CNPJ (strict saída).
+        - If issuer CNPJ is unavailable but `tpNF` is present, accept only `tpNF == '1'` (saída).
+        - Others are ignored.
+        """
         company = self.company
+        # Avoid SEFAZ cStat=656 when rebootstrapping NSU=0 too soon
+        if (company.last_nsu or 0) == 0 and company.last_nsu_updated_at:
+            if timezone.now() - company.last_nsu_updated_at < timedelta(minutes=settings.SEFAZ_COOLDOWN_MINUTES):
+                raise SefazIntegrationError(
+                    str(_(
+                        "Operation temporarily blocked: NSU was recently reset. Please wait at least %(minutes)d minutes "
+                        "before trying again to avoid SEFAZ cStat=656 (Improper Consumption)."
+                    )) % {"minutes": settings.SEFAZ_COOLDOWN_MINUTES}
+                )
+        # Normalize company CNPJ to digits only for reliable comparisons
+        def _digits(s: str | None) -> str:
+            return "" if not s else "".join(ch for ch in s if ch.isdigit())
+        company_cnpj_digits = _digits(company.cnpj)
+
         current_nsu = int(company.last_nsu or 0)
         while True:
             ult_nsu, max_nsu, docs = self._fetch_batch(current_nsu)
             for doc in docs:
                 parsed = self._parse_doc(doc)
                 if not parsed:
+                    continue
+                # Outgoing filter (saída)
+                is_outgoing = False
+                if getattr(parsed, "issuer_cnpj", ""):
+                    is_outgoing = _digits(parsed.issuer_cnpj) == company_cnpj_digits
+                elif getattr(parsed, "tp_nf", ""):
+                    is_outgoing = str(parsed.tp_nf).strip() == "1"
+                if not is_outgoing:
                     continue
                 if parsed.issue_date and start <= parsed.issue_date <= end:
                     yield parsed

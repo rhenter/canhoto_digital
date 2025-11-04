@@ -6,7 +6,7 @@ from django.core.files.base import ContentFile
 
 from apps.company.models import Company
 from .models import Invoice
-from .sefaz import SefazClient
+from .integrations.sefaz import SefazClient
 from .utils_pdf import render_basic_pdf
 
 

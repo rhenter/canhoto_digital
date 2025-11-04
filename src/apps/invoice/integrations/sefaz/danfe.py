@@ -57,7 +57,6 @@ def generate_danfe_from_xml_bytes(xml_bytes: bytes) -> bytes:
         os.close(xml_fd)
 
     # Try constructing Danfe with xml TEXT first, then fallback to PATH
-    danfe = None
     construct_errors = []
     try:
         danfe = Danfe(xml_text)
