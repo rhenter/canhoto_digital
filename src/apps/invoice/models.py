@@ -6,7 +6,7 @@ from apps.core.constants import UF_CHOICES
 from apps.core.models import AddressFieldsMixin, BaseModel
 
 
-class Invoice(AddressFieldsMixin, BaseModel):
+class Invoice(BaseModel):
     company = models.ForeignKey(
         Company,
         on_delete=models.CASCADE,
@@ -34,7 +34,7 @@ class Invoice(AddressFieldsMixin, BaseModel):
     recipient_address_zip_code = models.CharField(max_length=12, blank=True, default="", verbose_name=_("Zip Code"))
     total_value = models.DecimalField(max_digits=15, decimal_places=2, default=0, verbose_name=_("Total value"), )
     xml_file = models.FileField(upload_to="invoices/xml/", blank=True, null=True, verbose_name=_("XML file"), )
-    pdf_file = models.FileField(upload_to="invoices/pdf/", blank=True, null=True, verbose_name=_("PDF file"), )
+    pdf_file = models.FileField(upload_to="invoices/pdf/", blank=True, null=True, verbose_name=_("DANFE"), )
     status = models.CharField(max_length=30, default="registered", verbose_name=_("Status"))
 
     class Meta:
@@ -44,4 +44,4 @@ class Invoice(AddressFieldsMixin, BaseModel):
         ordering = ["-issue_date", "-created_at"]
 
     def __str__(self):
-        return f"{str(self.company)} - NF {self.number}/{self.series}"
+        return f"NF {self.number}/{self.series} - {str(self.company)} "
