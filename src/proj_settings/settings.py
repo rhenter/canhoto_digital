@@ -694,7 +694,11 @@ SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("Bearer",),
 }
 
+TOKEN_OBTAIN_SERIALIZER = 'core.serializers.CustomTokenObtainPairSerializer'
+
 # Business Rules
 TERMS_OF_USE_VERSION_CURRENT = 1
 
+# SEFAZ e Integrations
 SEFAZ_HTTP_TIMEOUT_SECONDS = config('SEFAZ_HTTP_TIMEOUT_SECONDS', default='60', cast=config.eval)
+SEFAZ_COOLDOWN_MINUTES = config("SEFAZ_COOLDOWN_MINUTES", default=60, cast=int)

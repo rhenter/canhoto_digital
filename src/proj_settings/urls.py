@@ -5,9 +5,9 @@ from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from drf_yasg import openapi
 from rest_framework import permissions
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework_simplejwt.views import TokenRefreshView
 
-from apps.core.views import CustomLoginView, HealthCheckView
+from apps.core.views import CustomLoginView, HealthCheckView, CustomTokenObtainPairView
 from proj_settings.schema import get_schema_view, CustomOpenAPISchemaGenerator
 from .admin_custom import admin_site, autodiscover_and_register
 
@@ -54,7 +54,7 @@ admin_patterns = i18n_patterns(
 )
 
 api_urlpatterns = [
-    path("v1/auth/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("v1/auth/token/", CustomTokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("v1/auth/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("v1/core/", include("apps.core.routes", namespace='core')),
     path("v1/delivery/", include("apps.delivery.urls", namespace='delivery')),
