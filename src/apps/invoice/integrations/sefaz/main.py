@@ -473,12 +473,11 @@ class SefazClient:
         return None
 
     def list_invoices(self, start: date, end: date) -> Iterable[SefazInvoiceData]:
-        """Yield OUTGOING (saída) invoices within the given date range inclusive, iterating via NSU batches.
+        """Yield ALL invoices (entrada e saída) within the given date range inclusive, iterating via NSU batches.
 
-        Filtering rule:
-        - Prefer invoices where issuer CNPJ matches the company's CNPJ (strict saída).
-        - If issuer CNPJ is unavailable but `tpNF` is present, accept only `tpNF == '1'` (saída).
-        - Others are ignored.
+        Notes:
+        - No filtro por tipo de nota (tpNF). Serão retornadas notas onde a SEFAZ relaciona a empresa
+          (tanto emitidas quanto recebidas), respeitando apenas o intervalo de datas informado.
         """
         company = self.company
         # Avoid SEFAZ cStat=656 when rebootstrapping NSU=0 too soon
@@ -490,10 +489,6 @@ class SefazClient:
                         "before trying again to avoid SEFAZ cStat=656 (Improper Consumption)."
                     )) % {"minutes": settings.SEFAZ_COOLDOWN_MINUTES}
                 )
-        # Normalize company CNPJ to digits only for reliable comparisons
-        def _digits(s: str | None) -> str:
-            return "" if not s else "".join(ch for ch in s if ch.isdigit())
-        company_cnpj_digits = _digits(company.cnpj)
 
         current_nsu = int(company.last_nsu or 0)
         while True:
@@ -502,14 +497,7 @@ class SefazClient:
                 parsed = self._parse_doc(doc)
                 if not parsed:
                     continue
-                # Outgoing filter (saída)
-                is_outgoing = False
-                if getattr(parsed, "issuer_cnpj", ""):
-                    is_outgoing = _digits(parsed.issuer_cnpj) == company_cnpj_digits
-                elif getattr(parsed, "tp_nf", ""):
-                    is_outgoing = str(parsed.tp_nf).strip() == "1"
-                if not is_outgoing:
-                    continue
+                # Sem filtro de saída: inclui entrada (0) e saída (1)
                 if parsed.issue_date and start <= parsed.issue_date <= end:
                     yield parsed
             # Update company NSU even if no docs matched date filter
