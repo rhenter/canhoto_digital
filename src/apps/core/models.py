@@ -217,6 +217,7 @@ class TranslatableFieldMixin:
 class AddressFieldsMixin(models.Model):
     address_street = models.CharField(max_length=255, blank=True, default="", verbose_name=_("Street"))
     address_number = models.CharField(max_length=255, blank=True, default="", verbose_name=_("Number"))
+    address_complement = models.CharField(max_length=255, blank=True, default="", verbose_name=_("Complement"))
     address_neighborhood = models.CharField(max_length=255, blank=True, default="", verbose_name=_("Neighborhood"))
     address_city = models.CharField(max_length=255, blank=True, default="", verbose_name=_("City"))
     address_uf = models.CharField(

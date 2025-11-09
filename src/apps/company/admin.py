@@ -15,8 +15,15 @@ from .models import Company
 @admin.register(Company)
 class CompanyAdmin(admin.ModelAdmin):
     form = CompanyAdminForm
-    list_display = ("code", "name", "legal_name", "_cnpj", "cooldown_status", "_created_at", "invoices_link",
-                    "deliveries_link")
+    list_display = (
+        "code",
+        "name",
+        "_cnpj",
+        "cooldown_status",
+        "_created_at",
+        "invoices_link",
+        "deliveries_link"
+    )
     search_fields = ("name", "legal_name", "cnpj")
     list_filter = ("created_at",)
     actions = ["action_safe_nsu_reset"]
@@ -36,7 +43,13 @@ class CompanyAdmin(admin.ModelAdmin):
         }),
         (_('ADDRESS'), {
             'fields': (
-                "address_street", "address_neighborhood", "address_city", "address_uf"
+                "address_street",
+                "address_number",
+                "address_complement",
+                "address_neighborhood",
+                "address_city",
+                "address_uf",
+                "address_zip_code",
             ),
         }),
         ('SEFAZ CONFIG', {

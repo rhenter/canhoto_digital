@@ -73,6 +73,13 @@ class CompanySerializer(serializers.ModelSerializer):
             "last_nsu_updated_at",
             "csc_id",
             "csc_token",
+            "address_street",
+            "address_number",
+            "address_complement",
+            "address_neighborhood",
+            "address_city",
+            "address_uf",
+            "address_zip_code",
             "created_at",
             "updated_at",
         ]
