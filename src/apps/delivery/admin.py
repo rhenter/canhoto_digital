@@ -2,8 +2,15 @@ from django.contrib import admin
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
+# Try to use GeoDjango admin if available; fallback gracefully when GIS deps are missing
+try:
+    from django.contrib.gis.admin import OSMGeoAdmin  # type: ignore
+except Exception:  # GeoDjango not available (e.g., missing GEOS/GDAL)
+    class OSMGeoAdmin(admin.ModelAdmin):  # Fallback without map widget
+        pass
+
 from apps.core.templatetags.app_utils import cep_mask
-from .models import Delivery, ProofOfDelivery
+from .models import Delivery, ProofOfDelivery, ProofOfDeliveryPhoto
 
 
 @admin.register(Delivery)
@@ -85,17 +92,37 @@ class DeliveryAdmin(admin.ModelAdmin):
     invoice_address.short_description = _("Delivery Address")
 
 
+class ProofOfDeliveryPhotoInline(admin.TabularInline):
+    model = ProofOfDeliveryPhoto
+    extra = 0
+    fields = ["image",]
+
+
 @admin.register(ProofOfDelivery)
-class ProofOfDeliveryAdmin(admin.ModelAdmin):
+class ProofOfDeliveryAdmin(OSMGeoAdmin):
     list_display = ("id", "delivery", "received_by_name", "signed_at_server")
     search_fields = ("delivery__invoice__number", "received_by_name")
     list_filter = ("signed_at_server",)
+    readonly_fields = ["signed_at_server", "created_at", "delivery_assigned_to"]
     fields = [
         "delivery",
+        "delivery_assigned_to",
         "received_by_name",
         "received_by_document",
+        "signed_at",
         "signed_at_server",
+        "location",
         "signature_image",
-        "photos",
         "meta",
     ]
+    inlines = [ProofOfDeliveryPhotoInline]
+    default_lon = -47.8825
+    default_lat = -15.7942
+    default_zoom = 4
+
+    def delivery_assigned_to(self, obj):
+        if not obj or not getattr(obj, "delivery_id", None):
+            return "—"
+        user = getattr(obj.delivery, "assigned_to", None)
+        return str(user) if user else "—"
+    delivery_assigned_to.short_description = _("Assigned to")

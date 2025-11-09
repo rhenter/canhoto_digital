@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.contrib.gis.db import models as gis_models
 
 from apps.core.models import BaseModel
 from apps.delivery.constants import STATUS_CHOICES
@@ -32,7 +33,7 @@ class Delivery(BaseModel):
         ordering = ["-created_at"]
 
     def __str__(self):
-        return f"{self.code} ({self.status})"
+        return f"{str(self.invoice)} ({self.get_status_display()})"
 
 
 class ProofOfDelivery(BaseModel):
@@ -47,12 +48,9 @@ class ProofOfDelivery(BaseModel):
     signed_at = models.DateTimeField(help_text="Client device timestamp", verbose_name=_("Signed at"))
     signed_at_server = models.DateTimeField(auto_now_add=True, help_text="Server timestamp (trusted)",
                                             verbose_name=_("Signed at Server"))
-    geo_lat = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True, verbose_name=_("Geo Lat"))
-    geo_lng = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True, verbose_name=_("Geo Lng"))
-    signature_image = models.URLField(help_text="URL to signature image (e.g., S3 presigned object)",
+    location = gis_models.PointField(srid=4326, geography=True, null=True, blank=True, verbose_name=_("Location"))
+    signature_image = models.ImageField(upload_to="delivery/signatures/", blank=True, null=True,
                                       verbose_name=_("Signature Image"))
-    photos = models.JSONField(default=list, help_text="List of URLs to photos (e.g., S3 objects)",
-                              verbose_name=_("Photos"))
     meta = models.JSONField(default=dict, help_text="Metadata (device_id, app_version, etc.)", verbose_name=_("Meta"))
 
     class Meta:
@@ -62,3 +60,14 @@ class ProofOfDelivery(BaseModel):
 
     def __str__(self):
         return f"POD for {self.delivery.invoice.number}"
+
+
+class ProofOfDeliveryPhoto(BaseModel):
+    pod = models.ForeignKey(ProofOfDelivery, on_delete=models.CASCADE, related_name="photos", verbose_name=_("POD"))
+    image = models.ImageField(upload_to="delivery/photos/", verbose_name=_("Photo"))
+    meta = models.JSONField(default=dict, blank=True, verbose_name=_("Meta"))
+
+    class Meta:
+        verbose_name = _("POD Photo")
+        verbose_name_plural = _("POD Photos")
+        ordering = ["-created_at"]

@@ -110,6 +110,12 @@ COLLECTORS_DATABASE_URL = config('COLLECTORS_DATABASE_URL', default='')
 if COLLECTORS_DATABASE_URL:
     DATABASES[f'collectors'] = parse_db_url(COLLECTORS_DATABASE_URL)
 
+# Use PostGIS backend when PostgreSQL is configured
+if not TESTING:
+    engine = DATABASES['default'].get('ENGINE', '')
+    if engine.endswith('postgresql') or engine.endswith('postgresql_psycopg2'):
+        DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+
 #  Security & Signup/Signin
 ADMIN_USERNAME = config('ADMIN_USERNAME', default='admin')
 
@@ -202,6 +208,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.gis',
     # 3rd party libs
     'django_filters',
     'corsheaders',
@@ -696,9 +703,13 @@ SIMPLE_JWT = {
 
 TOKEN_OBTAIN_SERIALIZER = 'core.serializers.CustomTokenObtainPairSerializer'
 
+GDAL_LIBRARY_PATH = config('GDAL_LIBRARY_PATH', default='/opt/homebrew/opt/gdal/lib/libgdal.dylib')
+GEOS_LIBRARY_PATH = config('GEOS_LIBRARY_PATH', default='/opt/homebrew/opt/geos/lib/libgeos_c.dylib')
+
+
 # Business Rules
 TERMS_OF_USE_VERSION_CURRENT = 1
 
 # SEFAZ e Integrations
 SEFAZ_HTTP_TIMEOUT_SECONDS = config('SEFAZ_HTTP_TIMEOUT_SECONDS', default='60', cast=config.eval)
-SEFAZ_COOLDOWN_MINUTES = config("SEFAZ_COOLDOWN_MINUTES", default=60, cast=int)
+SEFAZ_COOLDOWN_MINUTES = config('SEFAZ_COOLDOWN_MINUTES', default=60, cast=int)
