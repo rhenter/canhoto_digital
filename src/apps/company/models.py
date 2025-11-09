@@ -3,6 +3,7 @@ from django.utils.translation import gettext_lazy as _
 import re
 
 from apps.core.models import BaseModel, AddressFieldsMixin
+from proj_settings.utils import capitalize
 from .constants import SEFAZ_ENV_CHOICES
 
 
@@ -114,15 +115,15 @@ class Company(AddressFieldsMixin, BaseModel):
     def __str__(self):
         return f"{self.name} ({self.cnpj})"
 
-    def clean(self):
+    def pre_save(self, save_kwargs):
         # Ensure numeric-only storage for CNPJ and IE
         self.cnpj = _only_digits(self.cnpj) or ""
         if self.inscricao_estadual is not None:
             ie_digits = _only_digits(self.inscricao_estadual)
             # Keep empty string for blank field if no digits provided
             self.inscricao_estadual = ie_digits or ""
-
-    def save(self, *args, **kwargs):
-        # Normalize before saving regardless of caller using full_clean()
-        self.clean()
-        return super().save(*args, **kwargs)
+        self.name = capitalize(self.name)
+        self.legal_name = capitalize(self.legal_name)
+        self.address_street = capitalize(self.address_street)
+        self.address_neighborhood = capitalize(self.address_neighborhood)
+        self.address_city = capitalize(self.address_city)
