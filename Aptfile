@@ -1,0 +1,8 @@
+# System packages required for GeoDjango (GEOS/GDAL/PROJ) and Postgres client on Heroku
+# Note: Package names may vary by Heroku stack; these work for heroku-22/heroku-24 at the time of writing
+gdal-bin
+libgdal-dev
+libgeos-dev
+libproj-dev
+proj-bin
+postgresql-client

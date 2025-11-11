@@ -216,3 +216,10 @@ vine==5.1.0
     #   kombu
 wcwidth==0.2.14
     # via prompt-toolkit
+
+
+# Heroku runtime requirements
+# Added for Procfile web process and static files serving
+# If you recompile with pip-compile, ensure these are retained in production.in
+gunicorn==21.2.0
+whitenoise==6.6.0

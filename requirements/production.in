@@ -34,3 +34,7 @@ cryptography>=42
 # DANFE generation
 brazilfiscalreport>=0.1.21
 reportlab>=4.2
+
+# Heroku deployment
+whitenoise>=6.5
+gunicorn>=21.2

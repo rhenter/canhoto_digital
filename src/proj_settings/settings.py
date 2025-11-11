@@ -119,9 +119,21 @@ if not TESTING:
 #  Security & Signup/Signin
 ADMIN_USERNAME = config('ADMIN_USERNAME', default='admin')
 
-_ALLOWED_HOSTS = f"*,{PROJECT_DOMAIN}"
+_ALLOWED_HOSTS = f"*,{PROJECT_DOMAIN},.herokuapp.com"
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=_ALLOWED_HOSTS, cast=config.list)
-CSRF_TRUSTED_ORIGINS = [f"https://{PROJECT_DOMAIN}", f"http://{PROJECT_DOMAIN}"]
+
+# Trust Heroku domains by default; can be overridden with env var CSRF_TRUSTED_ORIGINS
+_default_csrf_trusted = [
+    f"https://{PROJECT_DOMAIN}",
+    f"http://{PROJECT_DOMAIN}",
+    "https://*.herokuapp.com",
+]
+CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default=",".join(_default_csrf_trusted), cast=config.list)
+
+# Honor X-Forwarded-Proto header set by Heroku's router
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+SECURE_SSL_REDIRECT = config("SECURE_SSL_REDIRECT", default=True, cast=config.boolean)
+
 SECRET_KEY = config('SECRET_KEY', default=get_random_secret_key())
 #  Media & Static
 MEDIA_URL = "/media/"
@@ -166,6 +178,9 @@ if USE_S3_BACKEND:
     if USE_S3_FOR_STATICS:
         STORAGES["staticfiles"] = {"BACKEND": "storages.backends.s3boto3.S3StaticStorage"}
         ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
+else:
+    # Use WhiteNoise for static files if not using S3 static storage
+    STORAGES["staticfiles"] = {"BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"}
 
 AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID', default='')
 AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY', default='')
@@ -232,6 +247,8 @@ INSTALLED_APPS = (
 MIDDLEWARE = [
     'django.middleware.gzip.GZipMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    # Serve static files on Heroku
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
