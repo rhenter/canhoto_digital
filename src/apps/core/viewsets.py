@@ -12,7 +12,7 @@ from apps.user.constants import SYSADMIN_GROUP
 
 
 class AuthViewSet:
-    authentication_classes = [SessionAuthentication, TokenAuthentication]
+    # authentication_classes = [SessionAuthentication, TokenAuthentication]
     permission_classes = [Or(IsAuthenticated, )]
 
 
