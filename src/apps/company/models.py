@@ -1,16 +1,9 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-import re
 
 from apps.core.models import BaseModel, AddressFieldsMixin
-from proj_settings.utils import capitalize
+from proj_settings.utils import capitalize, only_digits, certificates_upload_path
 from .constants import SEFAZ_ENV_CHOICES
-
-
-def _only_digits(value: str | None) -> str | None:
-    if value is None:
-        return None
-    return re.sub(r"\D+", "", value)
 
 
 class Company(AddressFieldsMixin, BaseModel):
@@ -53,7 +46,7 @@ class Company(AddressFieldsMixin, BaseModel):
 
     # Digital certificate (e-CNPJ)
     certificate = models.FileField(
-        upload_to="certificates/",
+        upload_to=certificates_upload_path,
         blank=True,
         null=True,
         verbose_name=_("Digital certificate (A1)"),
@@ -117,9 +110,9 @@ class Company(AddressFieldsMixin, BaseModel):
 
     def pre_save(self, save_kwargs):
         # Ensure numeric-only storage for CNPJ and IE
-        self.cnpj = _only_digits(self.cnpj) or ""
+        self.cnpj = only_digits(self.cnpj) or ""
         if self.inscricao_estadual is not None:
-            ie_digits = _only_digits(self.inscricao_estadual)
+            ie_digits = only_digits(self.inscricao_estadual)
             # Keep empty string for blank field if no digits provided
             self.inscricao_estadual = ie_digits or ""
         self.name = capitalize(self.name)
