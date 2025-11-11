@@ -1,7 +1,6 @@
 import warnings
 
 from django.conf import settings
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_headers
 from drf_yasg.app_settings import swagger_settings
@@ -51,7 +50,7 @@ def get_schema_view(
     _spec_renderers = tuple(renderer.with_validators(validators)
                             for renderer in SPEC_RENDERERS)
 
-    class SchemaView(LoginRequiredMixin, APIView):
+    class SchemaView(APIView):
         _ignore_model_permissions = True
         schema = None  # exclude from schema
         public = _public

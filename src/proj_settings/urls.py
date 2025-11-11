@@ -38,7 +38,7 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    path('', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    path('', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc-base'),
     path('password_reset/', auth_views.PasswordResetView.as_view(
         html_email_template_name='registration/password_reset_email.html',
     ), name='password_reset'),
