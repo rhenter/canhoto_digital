@@ -1,10 +1,12 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
 from django.contrib.gis.db import models as gis_models
 
 from apps.core.models import BaseModel
-from apps.delivery.constants import STATUS_CHOICES
+from apps.delivery.constants import STATUS_CHOICES, POD_STATUS_CHOICES
+from proj_settings.utils import pod_signature_upload_path, pod_photo_upload_path
 
 User = get_user_model()
 
@@ -49,8 +51,11 @@ class ProofOfDelivery(BaseModel):
     signed_at_server = models.DateTimeField(auto_now_add=True, help_text="Server timestamp (trusted)",
                                             verbose_name=_("Signed at Server"))
     location = gis_models.PointField(srid=4326, geography=True, null=True, blank=True, verbose_name=_("Location"))
-    signature_image = models.ImageField(upload_to="delivery/signatures/", blank=True, null=True,
+    signature_image = models.ImageField(upload_to=pod_signature_upload_path, blank=True, null=True,
                                       verbose_name=_("Signature Image"))
+    status = models.CharField(max_length=20, blank=True, choices=POD_STATUS_CHOICES, default="delivered",
+                              verbose_name=_("Status"))
+    observations = models.TextField(blank=True, default="", verbose_name=_("Observations"))
     meta = models.JSONField(default=dict, help_text="Metadata (device_id, app_version, etc.)", verbose_name=_("Meta"))
 
     class Meta:
@@ -59,12 +64,22 @@ class ProofOfDelivery(BaseModel):
         ordering = ["-created_at"]
 
     def __str__(self):
-        return f"POD for {self.delivery.invoice.number}"
+        return f"POD for {self.invoice_number}"
+
+    @cached_property
+    def invoice_number(self):
+        return f"{self.delivery.invoice.number}/{self.delivery.invoice.series}"
+
+    def post_save(self, save_kwargs):
+        if self.status == "delivered":
+            self.delivery.status = "delivered"
+            self.delivery.delivery_at = self.signed_at
+            self.delivery.save()
 
 
 class ProofOfDeliveryPhoto(BaseModel):
     pod = models.ForeignKey(ProofOfDelivery, on_delete=models.CASCADE, related_name="photos", verbose_name=_("POD"))
-    image = models.ImageField(upload_to="delivery/photos/", verbose_name=_("Photo"))
+    image = models.ImageField(upload_to=pod_photo_upload_path, verbose_name=_("Photo"))
     meta = models.JSONField(default=dict, blank=True, verbose_name=_("Meta"))
 
     class Meta:

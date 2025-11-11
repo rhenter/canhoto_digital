@@ -129,6 +129,55 @@ def upload_to(instance, filename, document_type='image'):
         filename
     ])
 
+def only_digits(value: str | None) -> str | None:
+    if value is None:
+        return None
+    return re.sub(r"\D+", "", value)
+
+def certificates_upload_path(instance, filename):
+    base_path = settings.CERTIFICATES_STORAGE_ROOT
+    if '/' in filename:
+        filename = filename.split('/')[-1]
+
+    full_path = os.path.join(*[
+        "company",
+        base_path,
+        only_digits(instance.cnpj),
+        f"{filename}"
+    ])
+    return full_path
+
+
+def pod_signature_upload_path(instance, filename):
+    base_path = settings.POD_SIGNATURES_STORAGE_ROOT
+    invoice_number = instance.invoice_number.replace('/', '-')
+
+    if '/' in filename:
+        filename = filename.split('/')[-1]
+
+    full_path = os.path.join(*[
+        "pod",
+        f"{invoice_number}",
+        base_path,
+        f"{filename}"
+    ])
+    return full_path
+
+
+def pod_photo_upload_path(instance, filename):
+    base_path = settings.POD_PHOTO_STORAGE_ROOT
+    invoice_number = instance.pod.invoice_number.replace('/', '-')
+
+    if '/' in filename:
+        filename = filename.split('/')[-1]
+
+    full_path = os.path.join(*[
+        "pod",
+        f"{invoice_number}",
+        base_path,
+        f"{filename}"
+    ])
+    return full_path
 
 def image_upload_path(instance, filename):
     return upload_to(instance, filename, document_type='image')

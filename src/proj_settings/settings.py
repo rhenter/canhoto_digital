@@ -145,7 +145,9 @@ STATICFILES_FINDERS = (
 USE_S3_BACKEND = config('USE_S3_BACKEND', default=False, cast=bool)
 USE_S3_FOR_STATICS = config('USE_S3_FOR_STATICS', default=False, cast=bool)
 ASSESTS_STORAGE_ROOT = config('ASSESTS_STORAGE_ROOT', default='assets/')
-DOCUMENTS_STORAGE_ROOT = config('DOCUMENTS_STORAGE_ROOT', default='documents/')
+CERTIFICATES_STORAGE_ROOT = config('CERTIFICATES_STORAGE_ROOT', default='certificates/')
+POD_SIGNATURES_STORAGE_ROOT = config('POD_SIGNATURES_STORAGE_ROOT', default='signatures/')
+POD_PHOTO_STORAGE_ROOT = config('POD_PHOTO_STORAGE_ROOT', default='photos/')
 
 # Storage
 STORAGES = {

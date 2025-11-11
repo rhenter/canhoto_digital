@@ -6,3 +6,8 @@ STATUS_CHOICES = [
     ("failed", _("Failed")),
     ("partial", _("Partial")),
 ]
+POD_STATUS_CHOICES = [
+    ("delivered", _("Delivered")),
+    ("failed", _("Failed")),
+    ("partial", _("Partial")),
+]
