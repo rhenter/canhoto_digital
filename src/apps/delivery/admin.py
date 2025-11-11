@@ -1,13 +1,8 @@
 from django.contrib import admin
+from django.contrib.gis.admin import GISModelAdmin
+from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
-
-# Try to use GeoDjango admin if available; fallback gracefully when GIS deps are missing
-try:
-    from django.contrib.gis.admin import OSMGeoAdmin  # type: ignore
-except Exception:  # GeoDjango not available (e.g., missing GEOS/GDAL)
-    class OSMGeoAdmin(admin.ModelAdmin):  # Fallback without map widget
-        pass
 
 from apps.core.templatetags.app_utils import cep_mask
 from .models import Delivery, ProofOfDelivery, ProofOfDeliveryPhoto
@@ -21,9 +16,10 @@ class DeliveryAdmin(admin.ModelAdmin):
         "status",
         "assigned_to",
         "_created_at",
-        "_delivery_at"
+        "_delivery_at",
+        "pods_link",
     )
-    search_fields = ("invoice__number", "recipient_expected",)
+    search_fields = ("invoice__number", "invoice__key")
     list_filter = (
         "created_at",
         "delivery_at",
@@ -37,12 +33,23 @@ class DeliveryAdmin(admin.ModelAdmin):
         }),
         (_('DELIVERY DATA'), {
             'fields': (
-                "status", "delivery_at", "assigned_to", "invoice_address", "observations",
+                "status",
+                "delivery_at",
+                "assigned_to",
+                "invoice_address",
+                "observations",
             ),
         }),
     )
     autocomplete_fields = ['invoice']
     readonly_fields = ["created_at", "delivery_at", "invoice_details", "invoice_address"]
+
+    def get_changeform_initial_data(self, request):
+        initial = super().get_changeform_initial_data(request)
+        inv_id = request.GET.get("invoice")
+        if inv_id:
+            initial["invoice"] = inv_id
+        return initial
 
     def _created_at(self, obj):
         return obj.created_at.strftime('%Y-%m-%d %H:%M')
@@ -60,6 +67,13 @@ class DeliveryAdmin(admin.ModelAdmin):
 
     def _invoice_number(self, obj):
         return f"{obj.invoice.number}/{obj.invoice.series}"
+
+    def pods_link(self, obj):
+        url = reverse('admin:delivery_proofofdelivery_changelist')
+        query = f"?delivery__id__exact={obj.id}"
+        return mark_safe(f'<a class="button" href="{url}{query}">{_('List PODs')}</a>')
+
+    pods_link.short_description = _('PODs')
 
     def invoice_details(self, obj):
         if not obj or not getattr(obj, "invoice_id", None):
@@ -95,34 +109,64 @@ class DeliveryAdmin(admin.ModelAdmin):
 class ProofOfDeliveryPhotoInline(admin.TabularInline):
     model = ProofOfDeliveryPhoto
     extra = 0
-    fields = ["image",]
+    fields = ["image", ]
 
 
 @admin.register(ProofOfDelivery)
-class ProofOfDeliveryAdmin(OSMGeoAdmin):
-    list_display = ("id", "delivery", "received_by_name", "signed_at_server")
+class ProofOfDeliveryAdmin(GISModelAdmin):
+    list_display = (
+        "id",
+        "delivery",
+        "received_by_name",
+        "signed_at_server",
+        "status",
+    )
     search_fields = ("delivery__invoice__number", "received_by_name")
     list_filter = ("signed_at_server",)
-    readonly_fields = ["signed_at_server", "created_at", "delivery_assigned_to"]
+    readonly_fields = ["signed_at_server", "created_at", "delivery_assigned_to", "location_coords"]
     fields = [
         "delivery",
         "delivery_assigned_to",
+        "status",
+        "observations",
         "received_by_name",
         "received_by_document",
         "signed_at",
         "signed_at_server",
+        "location_coords",
         "location",
         "signature_image",
         "meta",
     ]
     inlines = [ProofOfDeliveryPhotoInline]
-    default_lon = -47.8825
-    default_lat = -15.7942
-    default_zoom = 4
+    gis_widget_kwargs = {
+        'attrs': {
+            'default_zoom': 7,
+            'default_lon': -44.18,
+            'default_lat': -22.54,
+            'map_width': 800,
+            'map_height': 500,
+        }
+    }
 
     def delivery_assigned_to(self, obj):
         if not obj or not getattr(obj, "delivery_id", None):
             return "—"
         user = getattr(obj.delivery, "assigned_to", None)
         return str(user) if user else "—"
+
     delivery_assigned_to.short_description = _("Assigned to")
+
+    def location_coords(self, obj):
+        if not obj or not getattr(obj, "location", None):
+            return "—"
+        try:
+            # GeoDjango PointField stores as (lon, lat)
+            lat = obj.location.y
+            lon = obj.location.x
+            maps_url = f"https://www.google.com/maps?q={lat},{lon}"
+            return mark_safe(f"{lat:.6f}, {lon:.6f} · <a href=\"{maps_url}\" target=\"_blank\">Google Maps</a>")
+        except Exception:
+            return "—"
+
+    location_coords.short_description = _("Coordinates")

@@ -11,7 +11,7 @@
   {% if change and original %}
     <li>
       <a href="{% url 'admin:invoice_invoice_download_xml' original.id %}" class="historylink">
-        {% trans "Download XML" %}
+        {% trans "Download XML from SEFAZ" %}
       </a>
     </li>
     <li>
@@ -19,5 +19,19 @@
         {% trans "Generate DANFE" %}
       </a>
     </li>
+    {# Delivery actions: create or view delivery prepopulating the invoice #}
+    {% if original.deliveries_id %}
+      <li>
+        <a href="{% url 'admin:delivery_delivery_change' original.deliveries_id %}" class="historylink">
+          {% trans "View Delivery" %}
+        </a>
+      </li>
+    {% else %}
+      <li>
+        <a href="{% url 'admin:delivery_delivery_add' %}?invoice={{ original.id }}" class="addlink">
+          {% trans "Create Delivery" %}
+        </a>
+      </li>
+    {% endif %}
   {% endif %}
 {% endblock %}

@@ -1,0 +1,19 @@
+{% extends "admin/change_form.html" %}
+{% load i18n admin_urls %}
+
+{#
+  Custom Delivery change form template to add a "List PODs" button next to the History link
+  Appears in the object-tools area (same area as History/View on site)
+#}
+
+{% block object-tools-items %}
+  {{ block.super }}
+  {% if change and original %}
+    <li>
+      {# Link to POD changelist filtered by this delivery #}
+      <a href="{% url 'admin:delivery_proofofdelivery_changelist' %}?delivery__id__exact={{ original.id }}" class="historylink">
+        {% trans "List PODs" %}
+      </a>
+    </li>
+  {% endif %}
+{% endblock %}
