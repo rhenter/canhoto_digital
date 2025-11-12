@@ -134,6 +134,17 @@ CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', default=",".join(_default_
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SECURE_SSL_REDIRECT = config("SECURE_SSL_REDIRECT", default=True, cast=config.boolean)
 
+# Configure default GDAL/GEOS/PROJ search paths when running on Heroku dynos.
+# This helps GeoDjango find native libraries installed by the APT buildpack.
+if os.environ.get("DYNO"):
+    os.environ.setdefault("PATH", f"/app/.apt/usr/bin:{os.environ.get('PATH','')}")
+    os.environ.setdefault("LD_LIBRARY_PATH", "/app/.apt/usr/lib")
+    os.environ.setdefault("PROJ_LIB", "/app/.apt/usr/share/proj")
+    os.environ.setdefault("GDAL_DATA", "/app/.apt/usr/share/gdal")
+    # Help Django find the shared objects explicitly if autodetection fails
+    os.environ.setdefault("GEOS_LIBRARY_PATH", "/app/.apt/usr/lib/libgeos_c.so")
+    os.environ.setdefault("GDAL_LIBRARY_PATH", "/app/.apt/usr/lib/libgdal.so")
+
 SECRET_KEY = config('SECRET_KEY', default=get_random_secret_key())
 #  Media & Static
 MEDIA_URL = "/media/"
