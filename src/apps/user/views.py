@@ -2,7 +2,7 @@ import logging
 
 from celery.utils.log import get_task_logger
 from rest_framework.decorators import action
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
 from apps.core.viewsets import BaseViewSet
@@ -10,7 +10,7 @@ from .models import User
 from .serializers import (
     UserBaseSerializer,
     UserCreateUpdateSerializer,
-    UserDetailSerializer, UserPreferenceSerializer
+    UserDetailSerializer, UserPreferenceSerializer, ChangePasswordSerializer
 )
 
 logger = logging.getLogger(__name__)
@@ -49,3 +49,10 @@ class UserViewSet(BaseViewSet):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(UserDetailSerializer(instance).data)
+
+    @action(detail=False, methods=['post'], url_path='change-password', permission_classes=[IsAuthenticated])
+    def change_password(self, request, *args, **kwargs):
+        serializer = ChangePasswordSerializer(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({"detail": "Password changed successfully."})
