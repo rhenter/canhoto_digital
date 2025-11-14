@@ -1,6 +1,6 @@
 DEFAULT_LANGUAGE_LIST = (
     ('en', 'English'),
-    ('pt-BR', 'Portuguese (Brazil)'),
+    ('pt-br', 'Portuguese (Brazil)'),
     ('es', 'Spanish')
 )
 UF_CHOICES = (
