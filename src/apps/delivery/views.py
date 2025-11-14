@@ -77,7 +77,6 @@ class ProofOfDeliveryViewSet(BaseViewSet):
         return self.serializer_class
 
     def create(self, request, *args, **kwargs):
-        a = 1
         delivery = Delivery.objects.filter(id=request.data.get("delivery")).first()
         if not delivery:
             raise ValidationError({"delivery_id": _("Delivery not found.")})

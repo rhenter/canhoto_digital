@@ -59,4 +59,6 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 
         serialized_data = serializer.validated_data
         serialized_data["user"] = UserProfileSerializer(serializer.user).data
+        serializer.user.last_login = timezone.now()
+        serializer.user.save()
         return Response(serializer.validated_data, status=status.HTTP_200_OK)

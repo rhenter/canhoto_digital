@@ -9,6 +9,7 @@ from ..core.serializers import AuditChangesSerializer
 
 class DeliverySerializer(serializers.ModelSerializer):
     invoice = InvoiceSerializer(read_only=True)
+    status_display = serializers.CharField(source='get_status_display', read_only=True)
 
     class Meta:
         model = Delivery
@@ -16,6 +17,7 @@ class DeliverySerializer(serializers.ModelSerializer):
             "id",
             "code",
             "status",
+            "status_display",
             "invoice",
             "observations",
             "assigned_to",
@@ -108,6 +110,7 @@ class PointJSONField(serializers.Field):
 class ProofOfDeliverySerializer(serializers.ModelSerializer):
     photos = ProofOfDeliveryPhotoSerializer(many=True, read_only=True)
     location = PointJSONField(required=False, allow_null=True)
+    status_display = serializers.CharField(source='get_status_display', read_only=True)
 
     class Meta:
         model = ProofOfDelivery
@@ -116,6 +119,7 @@ class ProofOfDeliverySerializer(serializers.ModelSerializer):
             "delivery",
             "received_by_name",
             "status",
+            "status_display",
             "observations",
             "received_by_document",
             "signed_at",

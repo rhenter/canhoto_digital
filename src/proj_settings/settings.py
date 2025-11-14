@@ -124,6 +124,7 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=_ALLOWED_HOSTS, cast=config.list
 
 # Trust Heroku domains by default; can be overridden with env var CSRF_TRUSTED_ORIGINS
 _default_csrf_trusted = [
+    f"http://localhost",
     f"https://{PROJECT_DOMAIN}",
     f"http://{PROJECT_DOMAIN}",
     "https://*.herokuapp.com",
