@@ -16,6 +16,7 @@
 {% block branding %}
     <h1 id="site-name">
         <a href="{% url 'admin:index' %}">
+            <img rel="icon" src="{% static 'img/logo.png' %}" height="50">
             <span style="margin-left: 5px; font-weight: bold; font-size: 16px; color: white">{{ settings.APP_NAME }} </span>
             <span style="margin-left: 5px; position: relative;  font-weight: bold; font-size: 20px">{% trans 'Environment' %}: {{ settings.ENVIRONMENT_NAME|title }}</span>
         </a>

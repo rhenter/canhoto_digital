@@ -32,5 +32,3 @@ class TermsOfServiceViewSet(BaseViewSet):
     permission_classes = [AllowAny]
     serializer_class = TermsOfServiceSerializer
     queryset = TermsOfService.objects.all()
-    filterset_fields = ('profile_type',)
-

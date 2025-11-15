@@ -17,7 +17,7 @@ class TermsOfServiceSerializer(serializers.ModelSerializer):
         model = TermsOfService
         fields = [
             'id',
-            'profile_type',
+            'version',
             'text',
         ]
         read_only_fields = (
