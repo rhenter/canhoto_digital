@@ -249,6 +249,7 @@ INSTALLED_APPS = (
     'drf_yasg',
     'django_models',
     'django.forms',
+    'django_ckeditor_5',
     # Local
     'apps.user.apps.UserConfig',
     'apps.core.apps.CoreConfig',

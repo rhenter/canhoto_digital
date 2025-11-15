@@ -51,6 +51,7 @@ admin_patterns = i18n_patterns(
     path('doc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('admin/clearcache/', include('clearcache.urls')),
     path('admin/', admin_site.urls),
+    path("ckeditor5/", include('django_ckeditor_5.urls')),
 )
 
 api_urlpatterns = [
