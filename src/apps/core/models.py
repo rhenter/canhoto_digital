@@ -1,5 +1,8 @@
 import logging
 
+from django_ckeditor_5.fields import CKEditor5Field
+
+from django.conf import settings
 from django.contrib.admin.models import LogEntry
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
@@ -78,20 +81,14 @@ class BaseModel(CodeModel, TimestampedModel, UUIDModel, SignalsModel):
 
 
 class TermsOfService(BaseModel):
-    """
-    Model to store Terms of Service content for different profile types.
-    
-    Allows different terms of service text for different user profiles
-    (user, store, etc.) to be managed and displayed appropriately.
-    """
-    profile_type = models.CharField(
-        max_length=18, choices=TERMS_OF_SERVICE_TYPES, null=True, blank=True,
-        verbose_name=_('Profile Type'),
-        help_text=_('Type of profile this terms of service applies to')
+    version = models.PositiveIntegerField(
+        blank=True, default=settings.TERMS_OF_USE_VERSION_CURRENT,
+        verbose_name=_('Version'),
     )
-    text = models.TextField(_('Terms of Service text'), blank=True,
-                            help_text=_('The actual terms of service content')
-                            )
+    text = CKEditor5Field(
+        _('Terms of Service text'), blank=True,
+        help_text=_('The actual terms of service content')
+    )
 
     class Meta:
         verbose_name = _('Terms of Service')

@@ -11,10 +11,15 @@ admin.site.site_title = settings.APP_NAME
 admin.site.enable_nav_sidebar = False
 
 
-class TermsOfServiceForm(forms.ModelForm):
-    class Meta:
-        model = TermsOfService
-        fields = '__all__'
+
+@admin.register(TermsOfService)
+class TermsOfServiceAdmin(admin.ModelAdmin):
+    model = TermsOfService
+    list_display = [
+        'code',
+        'version',
+    ]
+    exclude = ['code']
 
 
 @admin.register(SMTPSettings)
