@@ -65,6 +65,7 @@ django==5.2.7
     #   -r requirements/production.in
     #   dj-database-url
     #   django-celery-beat
+    #   django-ckeditor-5
     #   django-clearcache
     #   django-cors-headers
     #   django-filter
@@ -79,6 +80,8 @@ django==5.2.7
 django-cache-url==3.4.5
     # via -r requirements/production.in
 django-celery-beat==2.8.1
+    # via -r requirements/production.in
+django-ckeditor-5==0.2.18
     # via -r requirements/production.in
 django-clearcache==1.2.1
     # via -r requirements/production.in
@@ -109,6 +112,8 @@ fonttools==4.60.1
     # via fpdf2
 fpdf2==2.8.5
     # via brazilfiscalreport
+gunicorn==21.2.0
+    # via -r requirements/production.in
 idna==3.11
     # via requests
 inflection==0.5.1
@@ -126,6 +131,7 @@ kombu==5.5.4
 packaging==25.0
     # via
     #   drf-yasg
+    #   gunicorn
     #   kombu
     #   pytest
 phonenumbers==9.0.17
@@ -133,6 +139,7 @@ phonenumbers==9.0.17
 pillow==12.0.0
     # via
     #   -r requirements/production.in
+    #   django-ckeditor-5
     #   fpdf2
     #   reportlab
 pluggy==1.6.0
@@ -216,10 +223,5 @@ vine==5.1.0
     #   kombu
 wcwidth==0.2.14
     # via prompt-toolkit
-
-
-# Heroku runtime requirements
-# Added for Procfile web process and static files serving
-# If you recompile with pip-compile, ensure these are retained in production.in
-gunicorn==21.2.0
 whitenoise==6.6.0
+    # via -r requirements/production.in
