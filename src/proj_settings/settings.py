@@ -199,7 +199,7 @@ AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY', default='')
 AWS_REGION_NAME = config('AWS_REGION_NAME', default='us-east-2')
 
 AWS_DEFAULT_ACL = None
-S3_AWS_STORAGE_BUCKET_NAME = config('S3_AWS_STORAGE_BUCKET_NAME', default='canhoto_digital')
+S3_AWS_STORAGE_BUCKET_NAME = config('S3_AWS_STORAGE_BUCKET_NAME', default='canhoto-digital-dg')
 AWS_STORAGE_BUCKET_NAME = config('AWS_STORAGE_BUCKET_NAME', default=S3_AWS_STORAGE_BUCKET_NAME)
 
 AWS_LOCATION = config('AWS_LOCATION', default='')
@@ -439,7 +439,9 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERY_SEND_EVENTS = False
 CELERY_TIMEZONE = TIME_ZONE
 
-CELERY_BROKER_URL = config('BROKER_URL', default='')
+REDISCLOUD_URL = config('REDISCLOUD_URL', default='')
+
+CELERY_BROKER_URL = config('BROKER_URL', default=REDISCLOUD_URL)
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 CELERY_BROKER_POOL_LIMIT = None  # Adjust depending on the workload
 CELERY_BROKER_HEARTBEAT = 30  # Adjust depending on the workload
@@ -583,21 +585,17 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
     ),
-    # 'DEFAULT_THROTTLE_CLASSES': (
-    #     "rest_framework.throttling.UserRateThrottle",
-    #     "rest_framework.throttling.AnonRateThrottle",
-    # ),
-    # 'DEFAULT_THROTTLE_RATES': (
-    #     ('user', DEFAULT_USER_RATE),
-    #     ('anon', DEFAULT_ANON_RATE),
-    # ),
     "DATE_INPUT_FORMATS": DATE_INPUT_FORMATS,
     "DATE_FORMAT": DATE_FORMAT,
     "DATETIME_INPUT_FORMATS": DATETIME_INPUT_FORMATS
 }
 
+DEFAULT_CACHE_URL = 'redis://localhost'
+if REDISCLOUD_URL:
+    DEFAULT_CACHE_URL = REDISCLOUD_URL
+
 CACHES = {
-    'default': config('CACHE_URL', default='redis://localhost', cast=parse_cache_url)
+    'default': config('CACHE_URL', default=DEFAULT_CACHE_URL, cast=parse_cache_url)
 }
 
 CACHE_KEY_PREFIX = "digital_delivery_receipt:"
