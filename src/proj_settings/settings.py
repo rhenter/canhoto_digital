@@ -110,10 +110,11 @@ COLLECTORS_DATABASE_URL = config('COLLECTORS_DATABASE_URL', default='')
 if COLLECTORS_DATABASE_URL:
     DATABASES[f'collectors'] = parse_db_url(COLLECTORS_DATABASE_URL)
 
-# Use PostGIS backend when PostgreSQL is configured
+# Use PostGIS backend only when explicitly enabled
+POSTGIS_ENABLED = config('POSTGIS_ENABLED', default=False, cast=config.boolean)
 if not TESTING:
     engine = DATABASES['default'].get('ENGINE', '')
-    if engine.endswith('postgresql') or engine.endswith('postgresql_psycopg2'):
+    if POSTGIS_ENABLED and (engine.endswith('postgresql') or engine.endswith('postgresql_psycopg2')):
         DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
 #  Security & Signup/Signin
