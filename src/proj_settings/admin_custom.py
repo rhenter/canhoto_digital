@@ -13,24 +13,38 @@ class MyAdminSite(AdminSite):
     def get_app_list(self, request, app_label=None):
         """
         Override to organize models into custom functional groups
+        The final list still respects Django admin permissions because it is
+        built from `self._build_app_dict`, which filters apps/models by the
+        requesting user's permissions.
         """
+        # Define group names once so they can be referenced consistently
+        company_group = _("Company")
+        delivery_group = _("Delivery")
+        system_group = _("System Settings")
+        celery_group = _("Celery - Background Tasks")
+        user_mgmt_group = _("User Management")
+
         custom_groups = {
-            _("Company"): [
+            company_group: [
                 "company.Company",
                 "invoice.Invoice",
             ],
-            _("Delivery"): [
+            delivery_group: [
                 "delivery.Delivery",
                 "delivery.ProofOfDelivery",
             ],
-            _("Celery - Background Tasks"): [
+            system_group: [
+                "core.SMTPSettings",
+                "core.TermsOfService",
+            ],
+            celery_group: [
                 "django_celery_beat.CrontabSchedule",
                 "django_celery_beat.IntervalSchedule",
                 "django_celery_beat.PeriodicTask",
                 "celery_log.TaskLog",
                 "celery_log.TaskLogStatistics",
             ],
-            _("User Management"): [
+            user_mgmt_group: [
                 "user.User",
                 "user.CustomGroup",
                 "user.UserMetric",
@@ -38,6 +52,14 @@ class MyAdminSite(AdminSite):
                 "core.AuditLogEntry",
             ],
         }
+
+        # Only show Celery group to superusers or users in the "admin" group
+        is_admin_group_member = request.user.is_authenticated and (
+            request.user.is_superuser or request.user.groups.filter(name="admin").exists()
+        )
+        if not is_admin_group_member:
+            # Remove the celery group entirely for non-admin users
+            custom_groups.pop(celery_group, None)
 
         app_dict = self._build_app_dict(request, app_label)
         app_list = list(app_dict.values())
@@ -58,11 +80,11 @@ class MyAdminSite(AdminSite):
                 if model_id in model_lookup:
                     group_models.append(model_lookup[model_id])
 
-            # Only include groups that have models
+            # Only include groups that have models (after permission filtering)
             if group_models:
                 result.append({
                     "name": group_name,
-                    "app_label": group_name.lower().replace(" ", "_").replace("&", "and"),
+                    "app_label": str(group_name).lower().replace(" ", "_").replace("&", "and"),
                     "models": group_models,
                 })
 
