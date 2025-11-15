@@ -46,7 +46,7 @@ ENVIRONMENT_TYPES = {
     'prd': _('Production'),
 }
 ENVIRONMENT_NAME = ENVIRONMENT_TYPES.get(ENV, ENV)
-DEVELOPER_NAME = config("DEVELOPER_NAME", default='Henter4Dev')
+DEVELOPER_NAME = config("DEVELOPER_NAME", default='H-Devs')
 DEVELOPER_WEBSITE = config("DEVELOPER_WEBSITE", default='')
 
 WEBSITE_DEFAULT = f'.{ENV}.henter.com.br'
