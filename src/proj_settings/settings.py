@@ -192,7 +192,8 @@ if USE_S3_BACKEND:
         ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 else:
     # Use WhiteNoise for static files if not using S3 static storage
-    STORAGES["staticfiles"] = {"BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"}
+    # Use non-manifest storage to avoid collectstatic failures due to missing asset references
+    STORAGES["staticfiles"] = {"BACKEND": "whitenoise.storage.CompressedStaticFilesStorage"}
 
 AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID', default='')
 AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY', default='')
