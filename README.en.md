@@ -189,3 +189,9 @@ When the task finishes, it returns a payload like `{ "created": X, "updated": Y 
 - The NSU cursor (`company.last_nsu`) advances even if no invoices fall within the chosen date filter, which avoids re-reading old batches.
 - If you switch environments (homologation/production) or certificates, you may want to reset `last_nsu` to `0`.
 - Errors will surface in Admin messages or Celery logs. Check certificate validity and password if TLS errors occur.
+
+## License
+
+This software is licensed for use under a commercial agreement by h-devs. By using the software, you agree to the terms of the [EULA (English)](EULA.en.md) or [EULA (Português)](EULA.pt-BR.md).
+
+Copyright © 2025 h-devs. All rights reserved. For commercial licensing, contact: legal@h-devs.com

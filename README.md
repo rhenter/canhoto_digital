@@ -189,3 +189,9 @@ Quando a tarefa termina, ela retorna um payload como `{ "created": X, "updated":
 - O cursor de NSU (`company.last_nsu`) avança mesmo que nenhuma nota caia dentro do filtro de datas escolhido, evitando reprocessar lotes antigos.
 - Se você trocar o ambiente (homologação/produção) ou o certificado, pode ser necessário resetar o `last_nsu` para `0`.
 - Erros aparecerão nas mensagens do Admin ou nos logs do Celery. Verifique a validade do certificado e a senha em caso de erros de TLS.
+
+## Licença
+
+Este software é licenciado para uso sob um contrato comercial da h-devs. Ao utilizar o software, você concorda com os termos da [EULA (Português)](EULA.pt-BR.md) ou [EULA (English)](EULA.en.md).
+
+Direitos autorais © 2025 h-devs. Todos os direitos reservados. Para licenciamento comercial, contate: legal@h-devs.com
