@@ -10,6 +10,8 @@ from ..core.serializers import AuditChangesSerializer
 class DeliverySerializer(serializers.ModelSerializer):
     invoice = InvoiceSerializer(read_only=True)
     status_display = serializers.CharField(source='get_status_display', read_only=True)
+    created_at = serializers.DateTimeField(format="%d/%m/%Y %H:%M", read_only=True)
+    delivery_at = serializers.DateTimeField(format="%d/%m/%Y %H:%M", read_only=True)
 
     class Meta:
         model = Delivery
